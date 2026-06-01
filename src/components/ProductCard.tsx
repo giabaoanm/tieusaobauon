@@ -16,14 +16,16 @@ export default function ProductCard({ product }: { product: Product }) {
             alt={product.name}
             fill
             sizes="(max-width: 768px) 50vw, 25vw"
-            className="object-cover transition duration-500 group-hover:scale-105"
+            className={`object-cover transition duration-500 group-hover:scale-105 ${
+              product.sold ? "opacity-60 grayscale" : ""
+            }`}
           />
           <span className="absolute left-3 top-3 rounded-full bg-bamboo-600 px-2.5 py-1 text-xs font-medium text-white">
             {PRODUCT_TYPE_LABELS[product.type]}
           </span>
-          {product.stock <= 5 && (
-            <span className="absolute right-3 top-3 rounded-full bg-clay-600 px-2.5 py-1 text-xs font-medium text-white">
-              Sắp hết
+          {product.sold && (
+            <span className="absolute right-3 top-3 rounded-full bg-clay-700 px-3 py-1 text-xs font-bold text-white">
+              ĐÃ BÁN
             </span>
           )}
           {/* Nút nghe thử nhanh ở góc dưới ảnh */}
@@ -62,13 +64,13 @@ export default function ProductCard({ product }: { product: Product }) {
           </div>
         </dl>
 
-        <div className="mt-3 flex items-center justify-between">
+        <div className="mt-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
           <span className="text-lg font-bold text-clay-700">
             {formatPrice(product.price)}
           </span>
           <Link
             href={`/san-pham/${product.slug}`}
-            className="rounded-full bg-bamboo-100 px-3 py-1.5 text-sm font-medium text-bamboo-700 transition hover:bg-bamboo-200"
+            className="whitespace-nowrap rounded-full bg-bamboo-100 px-3 py-1.5 text-center text-sm font-medium text-bamboo-700 transition hover:bg-bamboo-200"
           >
             Xem chi tiết
           </Link>

@@ -1,6 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { isLoggedIn } from "@/lib/admin-auth";
 import { updateOrder, OrderStatus, PaymentStatus } from "@/lib/orders";
+import { setProductSold } from "@/lib/products-db";
+
+// Trạng thái đơn coi là "đã xác nhận bán" → đánh dấu cây Đã bán
+const SOLD_STATUSES: OrderStatus[] = ["confirmed", "shipping", "done"];
 
 export const runtime = "nodejs";
 
@@ -56,6 +60,15 @@ export async function PATCH(req: NextRequest) {
   const updated = await updateOrder(body.orderCode, patch);
   if (!updated) {
     return NextResponse.json({ error: "Không tìm thấy đơn." }, { status: 404 });
+  }
+
+  // ADMIN xác nhận đơn → đánh dấu các cây trong đơn là "Đã bán".
+  // Hủy / về "Mới đặt" → mở bán lại (ô chờ admin thay cây mới).
+  if (patch.orderStatus) {
+    const makeSold = SOLD_STATUSES.includes(patch.orderStatus);
+    for (const it of updated.items) {
+      await setProductSold(it.productId, makeSold);
+    }
   }
 
   return NextResponse.json({ order: updated });

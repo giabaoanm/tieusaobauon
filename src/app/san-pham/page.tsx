@@ -1,7 +1,9 @@
 import { Metadata } from "next";
 import ProductBrowser from "@/components/ProductBrowser";
-import { products } from "@/data/products";
+import { getAllProducts } from "@/lib/products-db";
 import { ProductType, PRODUCT_TYPE_LABELS } from "@/lib/types";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Tất cả sản phẩm",
@@ -16,6 +18,7 @@ export default async function ProductsPage({
 }) {
   // Next 16: searchParams là Promise, cần await
   const { type } = await searchParams;
+  const allProducts = await getAllProducts();
 
   // Lọc sẵn theo loại nếu vào từ danh mục (?type=sao_truc)
   const initialType =
@@ -34,7 +37,7 @@ export default async function ProductsPage({
         </p>
       </div>
 
-      <ProductBrowser allProducts={products} initialType={initialType} />
+      <ProductBrowser allProducts={allProducts} initialType={initialType} />
     </div>
   );
 }

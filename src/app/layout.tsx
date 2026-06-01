@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
+import ChatWidget from "@/components/ChatWidget";
 import { CartProvider } from "@/lib/cart";
 
 const inter = Inter({
@@ -14,14 +15,14 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: "Trúc Âm — Sáo trúc & Động tiêu thủ công",
-    template: "%s | Trúc Âm",
+    default: "Động tiêu Bá Uôn — Sáo trúc & tiêu trúc thủ công",
+    template: "%s | Động tiêu Bá Uôn",
   },
   description:
     "Cửa hàng sáo trúc, động tiêu trúc và nhạc cụ dân tộc thủ công. Mỗi sản phẩm có video thổi thử, thông tin tone, kích thước rõ ràng.",
   keywords: ["sáo trúc", "động tiêu", "tiêu trúc", "nhạc cụ dân tộc", "sáo Mèo"],
   openGraph: {
-    title: "Trúc Âm — Sáo trúc & Động tiêu thủ công",
+    title: "Động tiêu Bá Uôn — Sáo trúc & tiêu trúc thủ công",
     description:
       "Sáo trúc, động tiêu trúc thủ công. Nghe thử trực tiếp qua video từng cây.",
     type: "website",
@@ -42,6 +43,7 @@ export default function RootLayout({
           <Header />
           <main className="flex-1">{children}</main>
           <Footer />
+          <ChatWidget />
         </CartProvider>
       </body>
     </html>

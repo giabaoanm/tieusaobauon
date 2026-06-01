@@ -75,7 +75,7 @@ export default function OrderLookupPage() {
           required
           value={code}
           onChange={(e) => setCode(e.target.value)}
-          placeholder="Mã đơn (TA-XXXXXX)"
+          placeholder="Mã đơn (DH-XXXXXX)"
           className="rounded-xl border border-bamboo-300 px-4 py-2.5 text-bamboo-900 outline-none focus:border-bamboo-500"
         />
         <input

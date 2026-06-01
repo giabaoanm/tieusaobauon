@@ -73,5 +73,6 @@ src/
 - [x] **Sprint 2** — Giỏ hàng (localStorage) + đặt hàng + COD/VietQR + tra cứu đơn
 - [x] **Sprint 3** — VNPay (ký HMAC + IPN) + trang Admin (đăng nhập, quản lý đơn)
 - [x] **Sprint 4 (bảo mật)** — bcrypt + 2FA + khóa đăng nhập + CSP/headers (xem [BAO-MAT.md](./BAO-MAT.md))
-- [ ] **Sprint 5** — Quốc tế (Stripe/PayPal) + Supabase + SEO + go-live
+- [x] **Sprint 5a** — Supabase (DB + kho ảnh) + Admin **Quản lý sản phẩm** (tải ảnh, tự thêm/sửa/xóa). Cấu hình: [HUONG-DAN-SUPABASE.md](./HUONG-DAN-SUPABASE.md)
+- [ ] **Sprint 5b** — Quốc tế (Stripe/PayPal) + SEO + đưa lên mạng (go-live)
 ```

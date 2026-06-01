@@ -1,49 +1,65 @@
+import Image from "next/image";
 import Link from "next/link";
 import ProductCard from "@/components/ProductCard";
-import { getFeaturedProducts } from "@/data/products";
+import { getFeaturedProducts } from "@/lib/products-db";
 import { PRODUCT_TYPE_LABELS, ProductType } from "@/lib/types";
+
+export const dynamic = "force-dynamic";
 
 const categories: { type: ProductType; emoji: string }[] = [
   { type: "sao_truc", emoji: "🎋" },
   { type: "tieu_truc", emoji: "🪈" },
-  { type: "sao_meo", emoji: "🐱" },
-  { type: "sao_bau", emoji: "🍐" },
+  { type: "khac", emoji: "🎐" },
 ];
 
-export default function HomePage() {
-  const featured = getFeaturedProducts();
+export default async function HomePage() {
+  const featured = await getFeaturedProducts();
 
   return (
     <div>
-      {/* Hero — nền vàng trúc khô, chữ nâu gỗ */}
-      <section className="relative overflow-hidden border-b border-bamboo-500 bg-gradient-to-br from-bamboo-300 via-bamboo-400 to-bamboo-500 text-bamboo-900">
-        <div className="mx-auto max-w-6xl px-4 py-20 md:py-28">
-          <div className="max-w-2xl">
-            <p className="mb-3 text-sm font-semibold uppercase tracking-wider text-bamboo-800">
-              Nhạc cụ dân tộc thủ công
-            </p>
-            <h1 className="font-serif text-4xl font-bold leading-tight md:text-5xl">
-              Tiếng trúc vọng hồn quê
-            </h1>
-            <p className="mt-4 text-lg text-bamboo-800">
-              Sáo trúc, động tiêu và nhạc cụ truyền thống chế tác thủ công bởi
-              nghệ nhân làng nghề. Mỗi cây sáo — một âm sắc riêng, nghe thử trực
-              tiếp qua video.
-            </p>
-            <div className="mt-8 flex flex-wrap gap-4">
-              <Link
-                href="/san-pham"
-                className="rounded-full bg-bamboo-900 px-6 py-3 font-medium text-white transition hover:bg-bamboo-800"
-              >
-                Khám phá sản phẩm
-              </Link>
-              <Link
-                href="/gioi-thieu"
-                className="rounded-full border border-bamboo-800/50 px-6 py-3 font-medium text-bamboo-900 transition hover:bg-bamboo-900/10"
-              >
-                Câu chuyện của chúng tôi
-              </Link>
+      {/* Hero — 2 nửa: chữ bên trái, ảnh động tiêu thật bên phải */}
+      <section className="relative overflow-hidden border-b border-bamboo-700">
+        <div className="grid md:grid-cols-2">
+          {/* Nửa trái: nội dung trên nền vàng trúc */}
+          <div className="flex items-center bg-gradient-to-br from-bamboo-600 to-bamboo-800 px-4 py-16 text-white md:py-28">
+            <div className="mx-auto max-w-xl md:ml-auto md:mr-10">
+              <p className="mb-3 text-sm font-semibold uppercase tracking-wider text-bamboo-100">
+                Nhạc cụ dân tộc thủ công
+              </p>
+              <h1 className="font-serif text-4xl font-bold leading-tight md:text-6xl">
+                Thổi hồn vào trúc
+              </h1>
+              <p className="mt-4 text-lg text-white/90">
+                Sáo trúc, động tiêu chế tác thủ công bởi nghệ nhân. Mỗi cây — một
+                thanh âm riêng, nghe thử trực tiếp qua video.
+              </p>
+              <div className="mt-8 flex flex-wrap gap-4">
+                <Link
+                  href="/san-pham"
+                  className="rounded-full bg-white px-6 py-3 font-medium text-bamboo-900 transition hover:bg-bamboo-50"
+                >
+                  Khám phá sản phẩm
+                </Link>
+                <Link
+                  href="/gioi-thieu"
+                  className="rounded-full border border-white/60 px-6 py-3 font-medium text-white transition hover:bg-white/10"
+                >
+                  Câu chuyện của chúng tôi
+                </Link>
+              </div>
             </div>
+          </div>
+
+          {/* Nửa phải: ảnh động tiêu thật của shop */}
+          <div className="relative min-h-[360px] md:min-h-0">
+            <Image
+              src="/banner/dong-tieu-real.jpg"
+              alt="Động tiêu trúc thủ công - Bá Uôn"
+              fill
+              priority
+              sizes="(max-width: 768px) 100vw, 50vw"
+              className="object-cover object-center"
+            />
           </div>
         </div>
       </section>
@@ -53,7 +69,7 @@ export default function HomePage() {
         <h2 className="mb-8 text-center font-serif text-2xl font-bold text-bamboo-800">
           Danh mục nhạc cụ
         </h2>
-        <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
           {categories.map((c) => (
             <Link
               key={c.type}

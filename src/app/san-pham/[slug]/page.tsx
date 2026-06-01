@@ -5,13 +5,10 @@ import ProductGallery from "@/components/ProductGallery";
 import ProductCard from "@/components/ProductCard";
 import VideoButton from "@/components/VideoButton";
 import AddToCartButton from "@/components/AddToCartButton";
-import { getProductBySlug, products } from "@/data/products";
+import { getProductBySlug, getAllProducts } from "@/lib/products-db";
 import { PRODUCT_TYPE_LABELS, formatPrice } from "@/lib/types";
 
-// Tạo sẵn các trang tĩnh cho từng sản phẩm (SEO + tốc độ)
-export function generateStaticParams() {
-  return products.map((p) => ({ slug: p.slug }));
-}
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({
   params,
@@ -19,7 +16,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const product = getProductBySlug(slug);
+  const product = await getProductBySlug(slug);
   if (!product) return { title: "Không tìm thấy sản phẩm" };
   return {
     title: product.name,
@@ -38,11 +35,12 @@ export default async function ProductDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const product = getProductBySlug(slug);
+  const product = await getProductBySlug(slug);
   if (!product) notFound();
 
   // Sản phẩm liên quan: cùng loại, khác id
-  const related = products
+  const all = await getAllProducts();
+  const related = all
     .filter((p) => p.type === product.type && p.id !== product.id)
     .slice(0, 4);
 
@@ -60,7 +58,7 @@ export default async function ProductDetailPage({
         / <span className="text-bamboo-800">{product.name}</span>
       </nav>
 
-      <div className="grid gap-10 lg:grid-cols-2">
+      <div className="grid gap-10 md:grid-cols-2">
         {/* Cột ảnh (2 ảnh) */}
         <ProductGallery
           images={[product.imageMain, product.imageDetail]}
@@ -94,11 +92,7 @@ export default async function ProductDetailPage({
             />
             <Spec
               label="📦 Tình trạng"
-              value={
-                product.stock > 0
-                  ? `Còn hàng (${product.stock} cây)`
-                  : "Tạm hết hàng"
-              }
+              value={product.sold ? "Đã bán" : "Còn hàng — độc bản (1 cây)"}
             />
           </dl>
 
@@ -110,6 +104,7 @@ export default async function ProductDetailPage({
               variant="full"
             />
             <AddToCartButton
+              sold={product.sold}
               item={{
                 productId: product.id,
                 slug: product.slug,
@@ -118,7 +113,6 @@ export default async function ProductDetailPage({
                 image: product.imageMain,
                 toneLabel: product.toneLabel,
                 typeLabel: PRODUCT_TYPE_LABELS[product.type],
-                stock: product.stock,
               }}
             />
           </div>

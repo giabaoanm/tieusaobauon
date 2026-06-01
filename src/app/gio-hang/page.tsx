@@ -6,7 +6,7 @@ import { useCart } from "@/lib/cart";
 import { formatPrice } from "@/lib/types";
 
 export default function CartPage() {
-  const { items, total, setQty, remove } = useCart();
+  const { items, total, remove } = useCart();
 
   if (items.length === 0) {
     return (
@@ -66,44 +66,19 @@ export default function CartPage() {
                 <p className="mt-0.5 text-sm text-bamboo-600">
                   🎵 {item.toneLabel} · {item.typeLabel}
                 </p>
+                <p className="text-xs text-bamboo-500">Độc bản · 1 cây</p>
 
                 <div className="mt-auto flex items-center justify-between pt-2">
-                  {/* Số lượng */}
-                  <div className="flex items-center rounded-full border border-bamboo-300">
-                    <button
-                      type="button"
-                      onClick={() => setQty(item.productId, item.qty - 1)}
-                      className="px-3 py-1 text-lg text-bamboo-700"
-                      aria-label="Giảm"
-                    >
-                      −
-                    </button>
-                    <span className="w-8 text-center text-sm font-medium">
-                      {item.qty}
-                    </span>
-                    <button
-                      type="button"
-                      onClick={() => setQty(item.productId, item.qty + 1)}
-                      className="px-3 py-1 text-lg text-bamboo-700 disabled:opacity-40"
-                      disabled={item.qty >= item.stock}
-                      aria-label="Tăng"
-                    >
-                      +
-                    </button>
-                  </div>
-
-                  <div className="flex items-center gap-4">
-                    <span className="font-bold text-clay-700">
-                      {formatPrice(item.price * item.qty)}
-                    </span>
-                    <button
-                      type="button"
-                      onClick={() => remove(item.productId)}
-                      className="text-sm text-bamboo-500 hover:text-clay-600"
-                    >
-                      Xóa
-                    </button>
-                  </div>
+                  <span className="font-bold text-clay-700">
+                    {formatPrice(item.price)}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => remove(item.productId)}
+                    className="text-sm text-bamboo-500 hover:text-clay-600"
+                  >
+                    Xóa
+                  </button>
                 </div>
               </div>
             </div>

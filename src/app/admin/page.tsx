@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { requireAdmin } from "@/lib/admin-auth";
 import { listOrders } from "@/lib/orders";
 import { formatPrice } from "@/lib/types";
@@ -24,9 +25,17 @@ export default async function AdminPage() {
           <h1 className="font-serif text-3xl font-bold text-bamboo-800">
             Quản trị đơn hàng
           </h1>
-          <p className="mt-1 text-bamboo-600">Trúc Âm — khu vực Admin</p>
+          <p className="mt-1 text-bamboo-600">Động tiêu Bá Uôn — khu vực Admin</p>
         </div>
-        <AdminLogoutButton />
+        <div className="flex items-center gap-3">
+          <Link
+            href="/admin/san-pham"
+            className="rounded-full bg-bamboo-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-bamboo-700"
+          >
+            Quản lý sản phẩm
+          </Link>
+          <AdminLogoutButton />
+        </div>
       </div>
 
       {/* Thẻ thống kê */}
@@ -41,7 +50,14 @@ export default async function AdminPage() {
           Chưa có đơn hàng nào.
         </div>
       ) : (
-        <AdminOrderTable orders={orders} />
+        <>
+          <p className="mb-3 rounded-xl bg-bamboo-100 px-4 py-2.5 text-sm text-bamboo-700">
+            💡 Đổi trạng thái đơn sang <strong>“Đã xác nhận”</strong> (hoặc Đang
+            giao / Hoàn tất) sẽ tự đánh dấu cây trong đơn là{" "}
+            <strong>“Đã bán”</strong> trên web. Đổi sang “Đã hủy” sẽ mở bán lại.
+          </p>
+          <AdminOrderTable orders={orders} />
+        </>
       )}
     </div>
   );

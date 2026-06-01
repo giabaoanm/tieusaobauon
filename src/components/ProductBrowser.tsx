@@ -29,6 +29,7 @@ export default function ProductBrowser({
   const [tone, setTone] = useState<Tone | "all">("all");
   const [maxPrice, setMaxPrice] = useState<number>(1000000);
   const [sort, setSort] = useState<SortKey>("popular");
+  const [filtersOpen, setFiltersOpen] = useState(false); // mở/đóng lọc trên ĐT
 
   const types = Object.keys(PRODUCT_TYPE_LABELS) as ProductType[];
   const tones = Object.keys(TONE_LABELS) as Tone[];
@@ -51,9 +52,23 @@ export default function ProductBrowser({
   return (
     <div className="grid gap-8 lg:grid-cols-[260px_1fr]">
       {/* Cột lọc */}
-      <aside className="space-y-6 lg:sticky lg:top-24 lg:self-start">
-        <div className="rounded-2xl border border-bamboo-200 bg-white p-5">
-          <h3 className="mb-3 font-semibold text-bamboo-800">Loại nhạc cụ</h3>
+      <aside className="space-y-4 lg:sticky lg:top-24 lg:self-start">
+        {/* Nút bật/tắt bộ lọc (chỉ điện thoại) */}
+        <button
+          type="button"
+          onClick={() => setFiltersOpen((o) => !o)}
+          className="flex w-full items-center justify-between rounded-2xl border border-bamboo-200 bg-white px-5 py-3 font-medium text-bamboo-800 lg:hidden"
+          aria-expanded={filtersOpen}
+        >
+          <span>🔎 Bộ lọc sản phẩm</span>
+          <span aria-hidden>{filtersOpen ? "▲" : "▼"}</span>
+        </button>
+
+        <div
+          className={`space-y-6 ${filtersOpen ? "block" : "hidden"} lg:block`}
+        >
+          <div className="rounded-2xl border border-bamboo-200 bg-white p-5">
+            <h3 className="mb-3 font-semibold text-bamboo-800">Loại nhạc cụ</h3>
           <div className="flex flex-wrap gap-2">
             <FilterChip active={type === "all"} onClick={() => setType("all")}>
               Tất cả
@@ -104,6 +119,7 @@ export default function ProductBrowser({
             onChange={(e) => setMaxPrice(Number(e.target.value))}
             className="w-full accent-bamboo-600"
           />
+          </div>
         </div>
       </aside>
 

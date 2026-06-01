@@ -18,7 +18,7 @@ export const products: Product[] = [
     lengthCm: 62,
     diameterMm: 22,
     price: 350000,
-    stock: 12,
+    sold: false,
     imageMain:
       "https://images.unsplash.com/photo-1558583055-d7ac00b1adca?w=800&q=80",
     imageDetail:
@@ -38,7 +38,7 @@ export const products: Product[] = [
     lengthCm: 58,
     diameterMm: 21,
     price: 320000,
-    stock: 8,
+    sold: false,
     imageMain:
       "https://images.unsplash.com/photo-1571974599782-87624638275e?w=800&q=80",
     imageDetail:
@@ -58,7 +58,7 @@ export const products: Product[] = [
     lengthCm: 80,
     diameterMm: 26,
     price: 680000,
-    stock: 5,
+    sold: false,
     imageMain:
       "https://images.unsplash.com/photo-1607457561901-e6ec3a6d16cf?w=800&q=80",
     imageDetail:
@@ -78,7 +78,7 @@ export const products: Product[] = [
     lengthCm: 85,
     diameterMm: 28,
     price: 750000,
-    stock: 3,
+    sold: false,
     imageMain:
       "https://images.unsplash.com/photo-1525201548942-d8732f6617a0?w=800&q=80",
     imageDetail:
@@ -98,7 +98,7 @@ export const products: Product[] = [
     lengthCm: 48,
     diameterMm: 19,
     price: 290000,
-    stock: 15,
+    sold: false,
     imageMain:
       "https://images.unsplash.com/photo-1465821185615-20b3c2fbf41b?w=800&q=80",
     imageDetail:
@@ -118,7 +118,7 @@ export const products: Product[] = [
     lengthCm: 54,
     diameterMm: 20,
     price: 310000,
-    stock: 9,
+    sold: true,
     imageMain:
       "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=800&q=80",
     imageDetail:
@@ -126,46 +126,6 @@ export const products: Product[] = [
     videoUrl: "https://www.youtube.com/embed/HuFYqnbVbzY",
     description:
       "Sáo La âm sắc cân bằng giữa trầm và bổng. Trúc già phơi đủ nắng 3 năm cho tiếng chắc, ít bị ù.",
-    featured: false,
-  },
-  {
-    id: "7",
-    slug: "sao-meo-re-d4",
-    name: "Sáo Mèo Rê (D4) — Lưỡi gà đồng",
-    type: "sao_meo",
-    tone: "D",
-    toneLabel: "Rê (D4)",
-    lengthCm: 40,
-    diameterMm: 18,
-    price: 250000,
-    stock: 11,
-    imageMain:
-      "https://images.unsplash.com/photo-1483412468200-72182dbbc544?w=800&q=80",
-    imageDetail:
-      "https://images.unsplash.com/photo-1535992165812-68d1861aa71e?w=800&q=80",
-    videoUrl: "https://www.youtube.com/embed/qH5El5xH1Yo",
-    description:
-      "Sáo Mèo Tây Bắc, lưỡi gà bằng đồng, âm thanh đặc trưng vùng cao mượt mà, da diết. Dùng cho nhạc dân tộc H'Mông.",
-    featured: false,
-  },
-  {
-    id: "8",
-    slug: "sao-bau-do-c4",
-    name: "Sáo bầu Đô (C4) — Hồ lô 3 ống",
-    type: "sao_bau",
-    tone: "C",
-    toneLabel: "Đô (C4)",
-    lengthCm: 52,
-    diameterMm: 24,
-    price: 420000,
-    stock: 6,
-    imageMain:
-      "https://images.unsplash.com/photo-1621360841013-c7683c659ec6?w=800&q=80",
-    imageDetail:
-      "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=800&q=80",
-    videoUrl: "https://www.youtube.com/embed/y7e-GC6oGhg",
-    description:
-      "Sáo bầu (Hulusi) bầu hồ lô tự nhiên, 3 ống, âm thanh êm như tiếng hát. Có ống bè tạo bè trầm đặc sắc.",
     featured: false,
   },
 ];

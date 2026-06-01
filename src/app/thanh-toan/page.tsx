@@ -38,7 +38,7 @@ export default function CheckoutPage() {
         body: JSON.stringify({
           ...form,
           paymentMethod: payment,
-          items: items.map((i) => ({ productId: i.productId, qty: i.qty })),
+          items: items.map((i) => ({ productId: i.productId, qty: 1 })),
         }),
       });
       const data = await res.json();
@@ -193,12 +193,9 @@ export default function CheckoutPage() {
           <div className="space-y-3">
             {items.map((i) => (
               <div key={i.productId} className="flex justify-between text-sm">
-                <span className="text-bamboo-700">
-                  {i.name}{" "}
-                  <span className="text-bamboo-500">× {i.qty}</span>
-                </span>
+                <span className="text-bamboo-700">{i.name}</span>
                 <span className="shrink-0 font-medium">
-                  {formatPrice(i.price * i.qty)}
+                  {formatPrice(i.price)}
                 </span>
               </div>
             ))}

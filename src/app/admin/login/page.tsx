@@ -19,7 +19,7 @@ export default async function AdminLoginPage() {
           <h1 className="mt-2 font-serif text-2xl font-bold text-bamboo-800">
             Đăng nhập quản trị
           </h1>
-          <p className="mt-1 text-sm text-bamboo-600">Trúc Âm — khu vực Admin</p>
+          <p className="mt-1 text-sm text-bamboo-600">Động tiêu Bá Uôn — khu vực Admin</p>
         </div>
 
         <AdminLoginForm twoFactor={twoFactor} />

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { products } from "@/data/products";
+import { getProductById } from "@/lib/products-db";
 import {
   Order,
   OrderItem,
@@ -92,19 +92,27 @@ export async function POST(req: NextRequest) {
   const items: OrderItem[] = [];
   for (const raw of rawItems) {
     const r = raw as Record<string, unknown>;
-    const product = products.find((p) => p.id === r.productId);
+    const product = await getProductById(String(r.productId));
     if (!product) {
       return NextResponse.json(
         { error: `Sản phẩm không tồn tại.` },
         { status: 400 },
       );
     }
-    const qty = Math.max(1, Math.min(Number(r.qty) || 1, product.stock));
+    // Mỗi cây độc bản: nếu đã bán thì không cho đặt nữa
+    if (product.sold) {
+      return NextResponse.json(
+        {
+          error: `Rất tiếc, "${product.name}" vừa được bán. Vui lòng chọn cây khác.`,
+        },
+        { status: 409 },
+      );
+    }
     items.push({
       productId: product.id,
       name: product.name,
       price: product.price, // giá thật từ server
-      qty,
+      qty: 1, // độc bản, luôn 1 cây
     });
   }
 
@@ -150,6 +158,10 @@ export async function POST(req: NextRequest) {
   }
 
   await saveOrder(order);
+
+  // KHÔNG đánh dấu "đã bán" ở đây. Cây chỉ chuyển sang "Đã bán" khi
+  // ADMIN xác nhận đơn (đổi trạng thái sang "Đã xác nhận") trong trang
+  // quản trị — xem /api/admin/orders.
 
   return NextResponse.json({
     orderCode: order.orderCode,

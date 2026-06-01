@@ -13,6 +13,7 @@ import {
   ReactNode,
 } from "react";
 
+// Mỗi cây là độc bản → luôn mua số lượng 1, không có tồn kho.
 export interface CartItem {
   productId: string;
   slug: string;
@@ -21,16 +22,13 @@ export interface CartItem {
   image: string;
   toneLabel: string;
   typeLabel: string;
-  stock: number;
-  qty: number;
 }
 
 type CartState = { items: CartItem[] };
 
 type CartAction =
-  | { type: "ADD"; item: Omit<CartItem, "qty">; qty?: number }
+  | { type: "ADD"; item: CartItem }
   | { type: "REMOVE"; productId: string }
-  | { type: "SET_QTY"; productId: string; qty: number }
   | { type: "CLEAR" }
   | { type: "HYDRATE"; state: CartState };
 
@@ -39,37 +37,15 @@ const STORAGE_KEY = "trucam_cart_v1";
 function reducer(state: CartState, action: CartAction): CartState {
   switch (action.type) {
     case "ADD": {
-      const addQty = action.qty ?? 1;
-      const existing = state.items.find(
-        (i) => i.productId === action.item.productId,
-      );
-      if (existing) {
-        // Không vượt quá tồn kho
-        const newQty = Math.min(existing.qty + addQty, existing.stock);
-        return {
-          items: state.items.map((i) =>
-            i.productId === action.item.productId ? { ...i, qty: newQty } : i,
-          ),
-        };
+      // Đã có trong giỏ thì giữ nguyên (mỗi cây chỉ mua 1)
+      if (state.items.some((i) => i.productId === action.item.productId)) {
+        return state;
       }
-      return {
-        items: [
-          ...state.items,
-          { ...action.item, qty: Math.min(addQty, action.item.stock) },
-        ],
-      };
+      return { items: [...state.items, action.item] };
     }
     case "REMOVE":
       return {
         items: state.items.filter((i) => i.productId !== action.productId),
-      };
-    case "SET_QTY":
-      return {
-        items: state.items.map((i) =>
-          i.productId === action.productId
-            ? { ...i, qty: Math.max(1, Math.min(action.qty, i.stock)) }
-            : i,
-        ),
       };
     case "CLEAR":
       return { items: [] };
@@ -82,11 +58,10 @@ function reducer(state: CartState, action: CartAction): CartState {
 
 interface CartContextValue {
   items: CartItem[];
-  count: number; // tổng số lượng
+  count: number; // số cây trong giỏ
   total: number; // tổng tiền
-  add: (item: Omit<CartItem, "qty">, qty?: number) => void;
+  add: (item: CartItem) => void;
   remove: (productId: string) => void;
-  setQty: (productId: string, qty: number) => void;
   clear: () => void;
 }
 
@@ -114,16 +89,15 @@ export function CartProvider({ children }: { children: ReactNode }) {
     }
   }, [state]);
 
-  const count = state.items.reduce((s, i) => s + i.qty, 0);
-  const total = state.items.reduce((s, i) => s + i.qty * i.price, 0);
+  const count = state.items.length;
+  const total = state.items.reduce((s, i) => s + i.price, 0);
 
   const value: CartContextValue = {
     items: state.items,
     count,
     total,
-    add: (item, qty) => dispatch({ type: "ADD", item, qty }),
+    add: (item) => dispatch({ type: "ADD", item }),
     remove: (productId) => dispatch({ type: "REMOVE", productId }),
-    setQty: (productId, qty) => dispatch({ type: "SET_QTY", productId, qty }),
     clear: () => dispatch({ type: "CLEAR" }),
   };
 

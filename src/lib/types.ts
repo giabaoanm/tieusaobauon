@@ -1,15 +1,17 @@
 // Kiểu dữ liệu dùng chung cho toàn bộ ứng dụng.
 // Ở Sprint 1 dữ liệu nằm trong file mẫu; Sprint 2+ sẽ thay bằng Supabase/PostgreSQL.
 
+// Số ô sản phẩm tối đa (mỗi cây là độc bản, đăng từng cây một)
+export const MAX_PRODUCTS = 21;
+
 // Tone âm nhạc (nốt gốc của cây sáo/tiêu)
 export type Tone = "C" | "D" | "E" | "F" | "G" | "A" | "B";
 
 // Kiểu/loại sản phẩm
 export type ProductType =
   | "sao_truc" // Sáo trúc
-  | "tieu_truc" // Tiêu (động tiêu trúc)
-  | "sao_meo" // Sáo Mèo
-  | "sao_bau"; // Sáo bầu (hồ lô)
+  | "tieu_truc" // Động tiêu trúc
+  | "khac"; // Sản phẩm khác
 
 export interface Product {
   id: string;
@@ -21,7 +23,7 @@ export interface Product {
   lengthCm: number; // Chiều dài (kích thước)
   diameterMm: number; // Đường kính
   price: number; // Giá (VND)
-  stock: number; // Tồn kho
+  sold: boolean; // Độc bản: đã bán hay còn hàng
   imageMain: string; // Ảnh 1 (ảnh chính)
   imageDetail: string; // Ảnh 2 (ảnh chi tiết)
   videoUrl: string; // Video thổi thử (nút "Nghe thử")
@@ -33,8 +35,7 @@ export interface Product {
 export const PRODUCT_TYPE_LABELS: Record<ProductType, string> = {
   sao_truc: "Sáo trúc",
   tieu_truc: "Động tiêu trúc",
-  sao_meo: "Sáo Mèo",
-  sao_bau: "Sáo bầu",
+  khac: "Sản phẩm khác",
 };
 
 // Nhãn hiển thị cho tone (kèm tên Việt)

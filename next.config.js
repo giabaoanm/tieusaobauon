@@ -9,7 +9,7 @@ const csp = [
   `base-uri 'self'`,
   `object-src 'none'`,
   `frame-ancestors 'none'`, // chống nhúng iframe (clickjacking)
-  `img-src 'self' data: blob: https://img.vietqr.io https://images.unsplash.com https://res.cloudinary.com https://i.ytimg.com`,
+  `img-src 'self' data: blob: https://img.vietqr.io https://images.unsplash.com https://res.cloudinary.com https://i.ytimg.com https://*.supabase.co`,
   `script-src 'self' 'unsafe-inline' ${isDev ? "'unsafe-eval'" : ""} https://www.googletagmanager.com`,
   `style-src 'self' 'unsafe-inline'`,
   `font-src 'self' data:`,
@@ -46,6 +46,7 @@ const nextConfig = {
     remotePatterns: [
       { protocol: "https", hostname: "images.unsplash.com" },
       { protocol: "https", hostname: "res.cloudinary.com" },
+      { protocol: "https", hostname: "**.supabase.co" },
     ],
   },
   async headers() {

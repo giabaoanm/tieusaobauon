@@ -26,7 +26,7 @@ function SuccessContent() {
           Đặt hàng thành công!
         </h1>
         <p className="mt-2 text-bamboo-700">
-          Cảm ơn bạn đã đặt hàng tại Trúc Âm. Chúng tôi sẽ liên hệ sớm để xác
+          Cảm ơn bạn đã đặt hàng tại Động tiêu Bá Uôn. Chúng tôi sẽ liên hệ sớm để xác
           nhận.
         </p>
 

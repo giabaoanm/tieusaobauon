@@ -4,11 +4,11 @@ export default function AboutPage() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-16">
       <h1 className="font-serif text-3xl font-bold text-bamboo-800">
-        Câu chuyện Trúc Âm
+        Câu chuyện Động tiêu Bá Uôn
       </h1>
       <div className="mt-6 space-y-4 leading-relaxed text-bamboo-700">
         <p>
-          Trúc Âm ra đời từ tình yêu với tiếng sáo, tiếng tiêu — những âm thanh
+          Động tiêu Bá Uôn ra đời từ tình yêu với tiếng sáo, tiếng tiêu — những âm thanh
           mộc mạc gắn liền với hồn quê Việt Nam. Mỗi cây sáo, cây tiêu tại đây
           đều được chế tác thủ công bởi nghệ nhân làng nghề, chọn lọc từ những
           đốt trúc già nhất, phơi nắng đủ năm để cho âm thanh chuẩn và bền.
