@@ -1,0 +1,137 @@
+"use client";
+
+// ──────────────────────────────────────────────────────────────
+// Giỏ hàng — quản lý state bằng React Context + lưu vào localStorage
+// để giữ giỏ khi tải lại trang. Dùng toàn client-side (Sprint 2).
+// ──────────────────────────────────────────────────────────────
+
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useReducer,
+  ReactNode,
+} from "react";
+
+export interface CartItem {
+  productId: string;
+  slug: string;
+  name: string;
+  price: number;
+  image: string;
+  toneLabel: string;
+  typeLabel: string;
+  stock: number;
+  qty: number;
+}
+
+type CartState = { items: CartItem[] };
+
+type CartAction =
+  | { type: "ADD"; item: Omit<CartItem, "qty">; qty?: number }
+  | { type: "REMOVE"; productId: string }
+  | { type: "SET_QTY"; productId: string; qty: number }
+  | { type: "CLEAR" }
+  | { type: "HYDRATE"; state: CartState };
+
+const STORAGE_KEY = "trucam_cart_v1";
+
+function reducer(state: CartState, action: CartAction): CartState {
+  switch (action.type) {
+    case "ADD": {
+      const addQty = action.qty ?? 1;
+      const existing = state.items.find(
+        (i) => i.productId === action.item.productId,
+      );
+      if (existing) {
+        // Không vượt quá tồn kho
+        const newQty = Math.min(existing.qty + addQty, existing.stock);
+        return {
+          items: state.items.map((i) =>
+            i.productId === action.item.productId ? { ...i, qty: newQty } : i,
+          ),
+        };
+      }
+      return {
+        items: [
+          ...state.items,
+          { ...action.item, qty: Math.min(addQty, action.item.stock) },
+        ],
+      };
+    }
+    case "REMOVE":
+      return {
+        items: state.items.filter((i) => i.productId !== action.productId),
+      };
+    case "SET_QTY":
+      return {
+        items: state.items.map((i) =>
+          i.productId === action.productId
+            ? { ...i, qty: Math.max(1, Math.min(action.qty, i.stock)) }
+            : i,
+        ),
+      };
+    case "CLEAR":
+      return { items: [] };
+    case "HYDRATE":
+      return action.state;
+    default:
+      return state;
+  }
+}
+
+interface CartContextValue {
+  items: CartItem[];
+  count: number; // tổng số lượng
+  total: number; // tổng tiền
+  add: (item: Omit<CartItem, "qty">, qty?: number) => void;
+  remove: (productId: string) => void;
+  setQty: (productId: string, qty: number) => void;
+  clear: () => void;
+}
+
+const CartContext = createContext<CartContextValue | null>(null);
+
+export function CartProvider({ children }: { children: ReactNode }) {
+  const [state, dispatch] = useReducer(reducer, { items: [] });
+
+  // Đọc giỏ từ localStorage khi mount
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) dispatch({ type: "HYDRATE", state: JSON.parse(raw) });
+    } catch {
+      // bỏ qua dữ liệu hỏng
+    }
+  }, []);
+
+  // Ghi lại localStorage mỗi khi giỏ đổi
+  useEffect(() => {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    } catch {
+      // bỏ qua nếu localStorage không khả dụng
+    }
+  }, [state]);
+
+  const count = state.items.reduce((s, i) => s + i.qty, 0);
+  const total = state.items.reduce((s, i) => s + i.qty * i.price, 0);
+
+  const value: CartContextValue = {
+    items: state.items,
+    count,
+    total,
+    add: (item, qty) => dispatch({ type: "ADD", item, qty }),
+    remove: (productId) => dispatch({ type: "REMOVE", productId }),
+    setQty: (productId, qty) => dispatch({ type: "SET_QTY", productId, qty }),
+    clear: () => dispatch({ type: "CLEAR" }),
+  };
+
+  return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
+}
+
+export function useCart() {
+  const ctx = useContext(CartContext);
+  if (!ctx) throw new Error("useCart phải dùng bên trong <CartProvider>");
+  return ctx;
+}
