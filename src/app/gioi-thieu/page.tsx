@@ -28,18 +28,20 @@ export default function AboutPage() {
         <div className="grid gap-6 sm:grid-cols-[1fr_auto] sm:items-center">
           <ul className="list-disc space-y-2 pl-5">
             <li>
-              Mỗi cây <strong>đứng vững được trên mặt phẳng</strong>
+              Mỗi cây tiêu được <strong>chuẩn âm thanh, khớp beat, dễ thổi, đủ
+              quãng</strong>
             </li>
             <li>
-              Chế tác chuẩn <strong>kích thước Lỗ Ban</strong>
+              Chế tác <strong>tỉ mỉ, chuẩn kích thước Lỗ Ban</strong>, cân bằng
+              khi dựng trên mặt phẳng
             </li>
             <li>
-              Lòng trong được{" "}
-              <strong>sơn mài bằng sơn mài tự nhiên Nhật Bản</strong>
+              Mỗi cây tiêu, sáo được <strong>thổi thử</strong> để nghe âm thanh
+              thật trước khi chọn mua
             </li>
             <li>
-              Mỗi cây là <strong>độc bản</strong> — một âm sắc riêng, không cây
-              nào giống cây nào
+              <strong>Đổi trả trong vòng 15 ngày</strong> nếu phát hiện sản phẩm
+              lỗi do người bán
             </li>
           </ul>
           <figure className="m-0 shrink-0">
