@@ -23,6 +23,9 @@ export default function CheckoutPage() {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
 
+  // Chỉ hiện VNPay khi đã bật (đặt NEXT_PUBLIC_VNPAY_ENABLED=1 trên Vercel)
+  const vnpayEnabled = process.env.NEXT_PUBLIC_VNPAY_ENABLED === "1";
+
   function update(field: keyof typeof form, value: string) {
     setForm((f) => ({ ...f, [field]: value }));
   }
@@ -166,13 +169,15 @@ export default function CheckoutPage() {
                 title="Chuyển khoản QR (VietQR)"
                 desc="Quét mã QR ngân hàng để chuyển khoản sau khi đặt."
               />
-              <PaymentOption
-                active={payment === "vnpay"}
-                onClick={() => setPayment("vnpay")}
-                icon="🏦"
-                title="VNPay (thẻ ATM / Visa / QR)"
-                desc="Thanh toán online qua cổng VNPay, xác nhận tự động."
-              />
+              {vnpayEnabled && (
+                <PaymentOption
+                  active={payment === "vnpay"}
+                  onClick={() => setPayment("vnpay")}
+                  icon="🏦"
+                  title="VNPay (thẻ ATM / Visa / Mastercard / QR)"
+                  desc="Thanh toán online qua cổng VNPay (cả thẻ quốc tế), xác nhận tự động."
+                />
+              )}
             </div>
             <p className="mt-4 text-xs text-bamboo-500">
               Thanh toán thẻ quốc tế (Visa/Mastercard qua Stripe/PayPal) sẽ bổ
