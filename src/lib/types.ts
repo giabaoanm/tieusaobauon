@@ -5,7 +5,17 @@
 export const MAX_PRODUCTS = 21;
 
 // Tone âm nhạc (nốt gốc của cây sáo/tiêu)
-export type Tone = "C" | "D" | "E" | "F" | "G" | "A" | "B";
+export type Tone =
+  | "C"
+  | "C#"
+  | "D"
+  | "E"
+  | "F"
+  | "G"
+  | "G#"
+  | "A"
+  | "Bb"
+  | "B";
 
 // Kiểu/loại sản phẩm
 export type ProductType =
@@ -41,11 +51,14 @@ export const PRODUCT_TYPE_LABELS: Record<ProductType, string> = {
 // Nhãn hiển thị cho tone (kèm tên Việt)
 export const TONE_LABELS: Record<Tone, string> = {
   C: "Đô (C)",
+  "C#": "Đô thăng (C#)",
   D: "Rê (D)",
   E: "Mi (E)",
   F: "Fa (F)",
   G: "Sol (G)",
+  "G#": "Sol thăng (G#)",
   A: "La (A)",
+  Bb: "Si giáng (Bb)",
   B: "Si (B)",
 };
 
