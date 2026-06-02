@@ -28,6 +28,7 @@ const STATUS_LABELS: Record<string, string> = {
 const PAYMENT_LABELS: Record<string, string> = {
   cod: "Thanh toán khi nhận hàng (COD)",
   vietqr: "Chuyển khoản VietQR",
+  vnpay: "VNPay",
 };
 
 export default function OrderLookupPage() {
@@ -36,10 +37,43 @@ export default function OrderLookupPage() {
   const [order, setOrder] = useState<OrderView | null>(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [canceling, setCanceling] = useState(false);
+  const [cancelMsg, setCancelMsg] = useState("");
+
+  async function handleCancel() {
+    if (!order) return;
+    if (
+      !confirm(
+        `Bạn chắc chắn muốn hủy đơn ${order.orderCode}? Thao tác này không thể hoàn lại.`,
+      )
+    )
+      return;
+    setCancelMsg("");
+    setError("");
+    setCanceling(true);
+    try {
+      const res = await fetch("/api/orders/cancel", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ code, phone }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setError(data.error || "Hủy đơn thất bại.");
+      } else {
+        setOrder(data.order);
+        setCancelMsg("✓ Đã hủy đơn hàng thành công.");
+      }
+    } catch {
+      setError("Không kết nối được máy chủ.");
+    }
+    setCanceling(false);
+  }
 
   async function handleSearch(e: React.FormEvent) {
     e.preventDefault();
     setError("");
+    setCancelMsg("");
     setOrder(null);
     setLoading(true);
     try {
@@ -160,6 +194,30 @@ export default function OrderLookupPage() {
               <span className="text-clay-700">{formatPrice(order.total)}</span>
             </div>
           </div>
+
+          {/* Hủy đơn — chỉ khi đơn chưa được xác nhận */}
+          {order.orderStatus === "new" && (
+            <div className="mt-5 border-t border-bamboo-200 pt-4">
+              <button
+                type="button"
+                onClick={handleCancel}
+                disabled={canceling}
+                className="rounded-full border border-clay-300 bg-clay-50 px-5 py-2.5 text-sm font-medium text-clay-700 transition hover:bg-clay-100 disabled:opacity-50"
+              >
+                {canceling ? "Đang hủy..." : "Hủy đơn hàng"}
+              </button>
+              <p className="mt-2 text-xs text-bamboo-500">
+                Bạn có thể tự hủy khi đơn còn ở trạng thái “Mới đặt”. Sau khi shop
+                xác nhận, vui lòng liên hệ shop để hủy.
+              </p>
+            </div>
+          )}
+
+          {cancelMsg && (
+            <div className="mt-4 rounded-xl border border-bamboo-300 bg-bamboo-50 px-4 py-2.5 text-sm text-bamboo-800">
+              {cancelMsg}
+            </div>
+          )}
         </div>
       )}
     </div>
