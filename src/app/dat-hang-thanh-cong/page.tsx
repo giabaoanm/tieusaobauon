@@ -4,7 +4,7 @@ import { Suspense, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { formatPrice } from "@/lib/types";
-import { getVietQRConfig, buildVietQRUrl } from "@/lib/vietqr";
+import { getVietQRConfig } from "@/lib/vietqr";
 
 function SuccessContent() {
   const params = useSearchParams();
@@ -13,10 +13,9 @@ function SuccessContent() {
   const method = params.get("method") ?? "cod";
 
   const vietqr = getVietQRConfig();
-  const qrUrl =
-    method === "vietqr" && vietqr && code
-      ? buildVietQRUrl(vietqr, total, code)
-      : null;
+  const showQr = method === "vietqr" && !!vietqr && !!code;
+  // Lấy ảnh QR qua API cùng tên miền (để hiển thị ổn định & tải về được)
+  const qrSrc = `/api/vietqr?amount=${total}&code=${encodeURIComponent(code)}`;
 
   return (
     <div className="mx-auto max-w-2xl px-4 py-14">
@@ -51,26 +50,56 @@ function SuccessContent() {
             <p className="mb-3 font-medium text-bamboo-800">
               📱 Quét mã VietQR để chuyển khoản
             </p>
-            {qrUrl && vietqr ? (
-              <div className="flex flex-col items-center gap-4 sm:flex-row sm:items-start">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={qrUrl}
-                  alt={`Mã QR thanh toán đơn ${code}`}
-                  className="w-56 shrink-0 rounded-lg border border-bamboo-200 bg-white"
-                />
-                {/* Thông tin chuyển khoản thủ công */}
-                <div className="w-full space-y-2 text-sm">
-                  <TransferRow label="Ngân hàng" value={vietqr.bankName} />
-                  <TransferRow label="Số tài khoản" value={vietqr.account} copy />
-                  <TransferRow label="Chủ tài khoản" value={vietqr.name} />
-                  <TransferRow label="Số tiền" value={formatPrice(total)} />
-                  <TransferRow
-                    label="Nội dung CK"
-                    value={`Thanh toan ${code}`}
-                    copy
-                  />
-                  <p className="pt-1 text-xs text-bamboo-500">
+            {showQr && vietqr ? (
+              <div>
+                <div className="flex flex-col items-center gap-4 sm:flex-row sm:items-start">
+                  <div className="flex shrink-0 flex-col items-center gap-2">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={qrSrc}
+                      alt={`Mã QR thanh toán đơn ${code}`}
+                      className="w-56 rounded-lg border border-bamboo-200 bg-white"
+                    />
+                    <a
+                      href={`${qrSrc}&download=1`}
+                      className="rounded-full bg-bamboo-100 px-4 py-1.5 text-xs font-medium text-bamboo-700 transition hover:bg-bamboo-200"
+                    >
+                      ⬇ Tải mã QR về máy
+                    </a>
+                  </div>
+                  {/* Thông tin chuyển khoản thủ công */}
+                  <div className="w-full space-y-2 text-sm">
+                    <TransferRow label="Ngân hàng" value={vietqr.bankName} />
+                    <TransferRow
+                      label="Số tài khoản"
+                      value={vietqr.account}
+                      copy
+                    />
+                    <TransferRow label="Chủ tài khoản" value={vietqr.name} />
+                    <TransferRow label="Số tiền" value={formatPrice(total)} />
+                    <TransferRow
+                      label="Nội dung CK"
+                      value={`Thanh toan ${code}`}
+                      copy
+                    />
+                  </div>
+                </div>
+
+                {/* Hướng dẫn cho người xem trên điện thoại (không có máy thứ 2) */}
+                <div className="mt-4 rounded-lg bg-white p-3 text-xs leading-relaxed text-bamboo-700">
+                  <p className="mb-1 font-medium text-bamboo-800">
+                    📱 Đang xem trên điện thoại? Thanh toán không cần máy thứ 2:
+                  </p>
+                  <p>
+                    ① <strong>Tải mã QR về máy</strong> → mở app ngân hàng → chọn{" "}
+                    <em>“Quét mã QR từ thư viện/ảnh”</em> → chọn ảnh vừa tải.
+                  </p>
+                  <p className="mt-1">
+                    ② Hoặc <strong>chuyển khoản thủ công</strong>: bấm{" "}
+                    <em>“Sao chép”</em> ở Số tài khoản và Nội dung, nhập đúng số
+                    tiền.
+                  </p>
+                  <p className="mt-1 text-bamboo-500">
                     Vui lòng ghi đúng nội dung để shop đối soát nhanh.
                   </p>
                 </div>
