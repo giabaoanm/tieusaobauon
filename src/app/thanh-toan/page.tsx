@@ -179,10 +179,6 @@ export default function CheckoutPage() {
                 />
               )}
             </div>
-            <p className="mt-4 text-xs text-bamboo-500">
-              Thanh toán thẻ quốc tế (Visa/Mastercard qua Stripe/PayPal) sẽ bổ
-              sung ở bước tiếp theo.
-            </p>
           </section>
 
           {error && (
