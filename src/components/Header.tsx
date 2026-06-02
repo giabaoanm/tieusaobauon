@@ -7,8 +7,9 @@ import { useCart } from "@/lib/cart";
 const NAV_LINKS = [
   { href: "/", label: "Trang chủ" },
   { href: "/san-pham", label: "Sản phẩm" },
-  { href: "/tra-cuu-don-hang", label: "Tra cứu đơn" },
+  { href: "/cam-nang", label: "Cẩm nang" },
   { href: "/gioi-thieu", label: "Giới thiệu" },
+  { href: "/tra-cuu-don-hang", label: "Tra cứu đơn" },
   { href: "/lien-he", label: "Liên hệ" },
 ];
 
@@ -27,7 +28,7 @@ export default function Header() {
         </Link>
 
         {/* Menu ngang (máy tính) */}
-        <nav className="hidden items-center gap-8 text-sm font-medium md:flex">
+        <nav className="hidden items-center gap-6 text-sm font-medium md:flex">
           {NAV_LINKS.map((l) => (
             <Link key={l.href} href={l.href} className="hover:text-bamboo-600">
               {l.label}
