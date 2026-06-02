@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getProductById } from "@/lib/products-db";
+import { sendOrderConfirmation } from "@/lib/email";
 import {
   Order,
   OrderItem,
@@ -158,6 +159,10 @@ export async function POST(req: NextRequest) {
   }
 
   await saveOrder(order);
+
+  // Gửi email xác nhận cho khách (nếu có email & đã cấu hình Resend).
+  // Không chặn đơn nếu gửi lỗi.
+  await sendOrderConfirmation(order);
 
   // KHÔNG đánh dấu "đã bán" ở đây. Cây chỉ chuyển sang "Đã bán" khi
   // ADMIN xác nhận đơn (đổi trạng thái sang "Đã xác nhận") trong trang
