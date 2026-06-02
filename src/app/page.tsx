@@ -7,8 +7,8 @@ import { PRODUCT_TYPE_LABELS, ProductType } from "@/lib/types";
 export const dynamic = "force-dynamic";
 
 const categories: { type: ProductType; emoji: string }[] = [
-  { type: "sao_truc", emoji: "🎋" },
   { type: "tieu_truc", emoji: "🪈" },
+  { type: "sao_truc", emoji: "🎋" },
   { type: "khac", emoji: "🎐" },
 ];
 
@@ -30,8 +30,9 @@ export default async function HomePage() {
                 Thổi hồn vào trúc
               </h1>
               <p className="mt-4 text-lg text-white/90">
-                Sáo trúc, động tiêu chế tác thủ công bởi nghệ nhân. Mỗi cây — một
-                thanh âm riêng, nghe thử trực tiếp qua video.
+                Động tiêu, sáo trúc làm thủ công từ đam mê cháy bỏng — dồn hết
+                tâm sức thổi hồn vào từng cây trúc, tạo nên những cây độc bản.
+                Mỗi cây một thanh âm riêng, nghe thử trực tiếp qua video.
               </p>
               <div className="mt-8 flex flex-wrap gap-4">
                 <Link
@@ -110,7 +111,7 @@ export default async function HomePage() {
         <div className="grid gap-6 md:grid-cols-3">
           {[
             { icon: "🎵", title: "Nghe thử trước khi mua", desc: "Mỗi sản phẩm có video thổi thử âm thanh thực tế." },
-            { icon: "🤲", title: "Thủ công làng nghề", desc: "Chế tác bởi nghệ nhân, chuẩn tone, bền đẹp." },
+            { icon: "🤲", title: "Làm từ đam mê", desc: "Mỗi cây dồn hết tâm sức của người làm, độc bản, chuẩn tone." },
             { icon: "🔒", title: "Mua sắm an toàn", desc: "Thanh toán bảo mật, đổi trả minh bạch." },
           ].map((item) => (
             <div

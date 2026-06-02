@@ -33,8 +33,8 @@ export interface Product {
 
 // Nhãn hiển thị tiếng Việt cho từng loại sản phẩm
 export const PRODUCT_TYPE_LABELS: Record<ProductType, string> = {
-  sao_truc: "Sáo trúc",
   tieu_truc: "Động tiêu trúc",
+  sao_truc: "Sáo trúc",
   khac: "Sản phẩm khác",
 };
 

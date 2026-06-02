@@ -15,16 +15,16 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: "Động tiêu Bá Uôn — Sáo trúc & tiêu trúc thủ công",
+    default: "Động tiêu Bá Uôn — Động tiêu & sáo trúc thủ công",
     template: "%s | Động tiêu Bá Uôn",
   },
   description:
-    "Cửa hàng sáo trúc, động tiêu trúc và nhạc cụ dân tộc thủ công. Mỗi sản phẩm có video thổi thử, thông tin tone, kích thước rõ ràng.",
-  keywords: ["sáo trúc", "động tiêu", "tiêu trúc", "nhạc cụ dân tộc", "sáo Mèo"],
+    "Cửa hàng động tiêu trúc & sáo trúc thủ công, độc bản. Mỗi sản phẩm có video thổi thử, thông tin tone, kích thước rõ ràng.",
+  keywords: ["động tiêu", "động tiêu trúc", "tiêu trúc", "sáo trúc", "nhạc cụ truyền thống"],
   openGraph: {
-    title: "Động tiêu Bá Uôn — Sáo trúc & tiêu trúc thủ công",
+    title: "Động tiêu Bá Uôn — Động tiêu & sáo trúc thủ công",
     description:
-      "Sáo trúc, động tiêu trúc thủ công. Nghe thử trực tiếp qua video từng cây.",
+      "Động tiêu, sáo trúc thủ công, độc bản. Nghe thử trực tiếp qua video từng cây.",
     type: "website",
     locale: "vi_VN",
   },

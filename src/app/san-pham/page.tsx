@@ -8,7 +8,7 @@ export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
   title: "Tất cả sản phẩm",
   description:
-    "Danh sách sáo trúc, động tiêu, sáo Mèo, sáo bầu — lọc theo tone, loại và giá.",
+    "Danh sách động tiêu trúc & sáo trúc thủ công — lọc theo tone, loại và giá.",
 };
 
 export default async function ProductsPage({

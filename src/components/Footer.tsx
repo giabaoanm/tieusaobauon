@@ -1,3 +1,13 @@
+import Link from "next/link";
+
+const LINKS = [
+  { href: "/", label: "Trang chủ" },
+  { href: "/san-pham", label: "Sản phẩm" },
+  { href: "/gioi-thieu", label: "Giới thiệu" },
+  { href: "/tra-cuu-don-hang", label: "Tra cứu đơn hàng" },
+  { href: "/lien-he", label: "Liên hệ" },
+];
+
 export default function Footer() {
   return (
     <footer className="mt-20 border-t border-bamboo-200 bg-bamboo-100">
@@ -11,18 +21,24 @@ export default function Footer() {
               </span>
             </div>
             <p className="text-sm text-bamboo-700">
-              Chuyên cung cấp sáo trúc, động tiêu và nhạc cụ dân tộc thủ công,
-              chế tác bởi nghệ nhân làng nghề.
+              Chuyên động tiêu trúc và sáo trúc thủ công, độc bản — mỗi cây dồn
+              cả đam mê, thổi hồn vào từng cây trúc.
             </p>
           </div>
 
           <div>
             <h4 className="mb-3 font-semibold text-bamboo-800">Liên kết</h4>
-            <ul className="space-y-2 text-sm text-bamboo-700">
-              <li>Sản phẩm</li>
-              <li>Hướng dẫn chọn sáo</li>
-              <li>Chính sách đổi trả</li>
-              <li>Tra cứu đơn hàng</li>
+            <ul className="space-y-2 text-sm">
+              {LINKS.map((l) => (
+                <li key={l.href}>
+                  <Link
+                    href={l.href}
+                    className="text-bamboo-700 transition hover:text-bamboo-900 hover:underline"
+                  >
+                    {l.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
@@ -30,8 +46,23 @@ export default function Footer() {
             <h4 className="mb-3 font-semibold text-bamboo-800">Liên hệ</h4>
             <ul className="space-y-2 text-sm text-bamboo-700">
               <li>👤 Bá Uôn</li>
-              <li>📞 0993 666 625</li>
-              <li>💬 Zalo: 0993 666 625</li>
+              <li>
+                📞{" "}
+                <a href="tel:0993666625" className="hover:underline">
+                  0993 666 625
+                </a>
+              </li>
+              <li>
+                💬{" "}
+                <a
+                  href="https://zalo.me/0993666625"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:underline"
+                >
+                  Zalo: 0993 666 625
+                </a>
+              </li>
             </ul>
           </div>
         </div>
