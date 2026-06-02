@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { formatPrice } from "@/lib/types";
 
 interface OrderView {
@@ -31,7 +32,8 @@ const PAYMENT_LABELS: Record<string, string> = {
   vnpay: "VNPay",
 };
 
-export default function OrderLookupPage() {
+function LookupContent() {
+  const searchParams = useSearchParams();
   const [code, setCode] = useState("");
   const [phone, setPhone] = useState("");
   const [order, setOrder] = useState<OrderView | null>(null);
@@ -39,6 +41,34 @@ export default function OrderLookupPage() {
   const [loading, setLoading] = useState(false);
   const [canceling, setCanceling] = useState(false);
   const [cancelMsg, setCancelMsg] = useState("");
+
+  async function doSearch(c: string, p: string) {
+    setError("");
+    setCancelMsg("");
+    setOrder(null);
+    setLoading(true);
+    try {
+      const res = await fetch(
+        `/api/orders?code=${encodeURIComponent(c)}&phone=${encodeURIComponent(p)}`,
+      );
+      const data = await res.json();
+      if (!res.ok) setError(data.error || "Không tìm thấy đơn.");
+      else setOrder(data.order);
+    } catch {
+      setError("Không kết nối được máy chủ.");
+    }
+    setLoading(false);
+  }
+
+  // Tự điền & tra cứu khi mở từ link trong email (?code=...&phone=...)
+  useEffect(() => {
+    const c = searchParams.get("code") || "";
+    const p = searchParams.get("phone") || "";
+    if (c) setCode(c);
+    if (p) setPhone(p);
+    if (c && p) doSearch(c, p);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams]);
 
   async function handleCancel() {
     if (!order) return;
@@ -70,26 +100,9 @@ export default function OrderLookupPage() {
     setCanceling(false);
   }
 
-  async function handleSearch(e: React.FormEvent) {
+  function handleSearch(e: React.FormEvent) {
     e.preventDefault();
-    setError("");
-    setCancelMsg("");
-    setOrder(null);
-    setLoading(true);
-    try {
-      const res = await fetch(
-        `/api/orders?code=${encodeURIComponent(code)}&phone=${encodeURIComponent(phone)}`,
-      );
-      const data = await res.json();
-      if (!res.ok) {
-        setError(data.error || "Không tìm thấy đơn.");
-      } else {
-        setOrder(data.order);
-      }
-    } catch {
-      setError("Không kết nối được máy chủ.");
-    }
-    setLoading(false);
+    doSearch(code, phone);
   }
 
   return (
@@ -103,14 +116,14 @@ export default function OrderLookupPage() {
 
       <form
         onSubmit={handleSearch}
-        className="mt-6 grid gap-4 rounded-2xl border border-bamboo-200 bg-white p-6 sm:grid-cols-[1fr_1fr_auto]"
+        className="mt-6 flex flex-col gap-3 rounded-2xl border border-bamboo-200 bg-white p-5 sm:flex-row sm:items-center sm:p-6"
       >
         <input
           required
           value={code}
           onChange={(e) => setCode(e.target.value)}
           placeholder="Mã đơn (DH-XXXXXX)"
-          className="rounded-xl border border-bamboo-300 px-4 py-2.5 text-bamboo-900 outline-none focus:border-bamboo-500"
+          className="w-full min-w-0 flex-1 rounded-xl border border-bamboo-300 px-4 py-2.5 text-bamboo-900 outline-none focus:border-bamboo-500"
         />
         <input
           required
@@ -118,12 +131,12 @@ export default function OrderLookupPage() {
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
           placeholder="Số điện thoại"
-          className="rounded-xl border border-bamboo-300 px-4 py-2.5 text-bamboo-900 outline-none focus:border-bamboo-500"
+          className="w-full min-w-0 flex-1 rounded-xl border border-bamboo-300 px-4 py-2.5 text-bamboo-900 outline-none focus:border-bamboo-500"
         />
         <button
           type="submit"
           disabled={loading}
-          className="rounded-xl bg-bamboo-600 px-6 py-2.5 font-medium text-white transition hover:bg-bamboo-700 disabled:opacity-50"
+          className="w-full shrink-0 rounded-xl bg-bamboo-600 px-6 py-2.5 font-medium text-white transition hover:bg-bamboo-700 disabled:opacity-50 sm:w-auto"
         >
           {loading ? "Đang tìm..." : "Tra cứu"}
         </button>
@@ -169,11 +182,11 @@ export default function OrderLookupPage() {
 
           <div className="mt-4 space-y-2 border-t border-bamboo-200 pt-4">
             {order.items.map((i, idx) => (
-              <div key={idx} className="flex justify-between text-sm">
-                <span className="text-bamboo-700">
+              <div key={idx} className="flex justify-between gap-3 text-sm">
+                <span className="min-w-0 text-bamboo-700">
                   {i.name} <span className="text-bamboo-500">× {i.qty}</span>
                 </span>
-                <span className="font-medium">
+                <span className="shrink-0 font-medium">
                   {formatPrice(i.price * i.qty)}
                 </span>
               </div>
@@ -221,5 +234,13 @@ export default function OrderLookupPage() {
         </div>
       )}
     </div>
+  );
+}
+
+export default function OrderLookupPage() {
+  return (
+    <Suspense fallback={<div className="py-20 text-center">Đang tải...</div>}>
+      <LookupContent />
+    </Suspense>
   );
 }

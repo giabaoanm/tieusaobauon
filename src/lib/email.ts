@@ -41,6 +41,10 @@ function buildHtml(order: Order): string {
     .join("");
 
   const url = siteUrl();
+  // Link tra cứu kèm sẵn mã đơn + SĐT để khách bấm là xem ngay, khỏi gõ
+  const trackUrl = `${url}/tra-cuu-don-hang?code=${encodeURIComponent(
+    order.orderCode,
+  )}&phone=${encodeURIComponent(order.phone)}`;
 
   return `
   <div style="font-family:Arial,Helvetica,sans-serif;max-width:560px;margin:0 auto;color:#45351c;">
@@ -71,10 +75,10 @@ function buildHtml(order: Order): string {
       </div>
 
       <div style="margin-top:22px;text-align:center;">
-        <a href="${url}/tra-cuu-don-hang" style="display:inline-block;background:#a07522;color:#fff;text-decoration:none;padding:12px 22px;border-radius:999px;font-weight:bold;">Tra cứu / Hủy đơn</a>
+        <a href="${trackUrl}" style="display:inline-block;background:#a07522;color:#fff;text-decoration:none;padding:12px 22px;border-radius:999px;font-weight:bold;">Tra cứu đơn hàng</a>
       </div>
       <p style="margin-top:16px;font-size:12px;color:#888;text-align:center;">
-        Dùng mã đơn <strong>${order.orderCode}</strong> + số điện thoại để tra cứu hoặc tự hủy khi đơn chưa được xác nhận.<br/>
+        Bấm nút trên để xem chi tiết đơn (mã đơn và số điện thoại đã được điền sẵn).<br/>
         Cần hỗ trợ? Gọi/Zalo: 0993 666 625
       </p>
     </div>
