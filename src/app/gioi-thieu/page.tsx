@@ -9,17 +9,29 @@ export default function AboutPage() {
 
       <div className="mt-6 space-y-4 leading-relaxed text-bamboo-700">
         <p>
-          Động tiêu Bá Uôn ra đời từ niềm đam mê cháy bỏng với cây động tiêu —
-          thứ thanh âm nhẹ nhàng, êm dịu, chậm rãi và sâu lắng, khiến người thổi
-          được thư giãn, người nghe thấy dễ chịu.
+          Những ngày đầu, Bá Uôn cũng là người thích động tiêu và đi mua về để
+          trải nghiệm, rồi nhận ra rất nhiều cây tiêu rất khó thổi, khó điều
+          khiển, âm thanh phô — mặc dù giá không hề rẻ.
         </p>
         <p>
-          Những ngày đầu, anh Bá Uôn mua vài cây tiêu về trải nghiệm và nhận ra:
-          mỗi loại trúc, mỗi người làm lại cho một kiểu âm thanh khác nhau — mà
-          giá tiêu lại khá cao so với sáo. Cuối cùng anh quyết định <strong>tự
-          làm</strong> để hiểu tận cùng cây tiêu. Sau hơn một năm mày mò, qua
-          không biết bao lần sai hỏng, anh đã làm ra được những cây tiêu ưng ý
-          đến mức <em>“đổi cả gia tài cũng không đổi”</em>.
+          Không thỏa mãn với những sản phẩm mua từ thị trường, anh một mình mày
+          mò, đêm ngày nghiên cứu cách chế tạo động tiêu: thử nghiệm các loại
+          trúc, cách xử lý thân trúc để chống mối mọt, nứt vỡ do thời tiết, và
+          làm sao để người dùng thổi không chỉ chuẩn âm, đủ quãng mà còn cho ra
+          những màu âm hay, chất chứa cảm xúc.
+        </p>
+        <p>
+          Sau hơn 3 năm miệt mài, thành quả mang lại cho Bá Uôn không hề nhỏ —
+          hàng loạt cây động tiêu, sáo trúc cực kỳ hay đã ra đời, tủ kệ sản phẩm
+          mỗi ngày một nhiều thêm. Nhưng trong lòng thực sự không muốn bán những
+          cây tiêu, cây sáo quý giá đã bao ngày đêm nắn nót từng mũi dao để làm
+          ra; có lúc không thổi mà chỉ mang ra ngắm nhìn cũng thấy vui.
+        </p>
+        <p>
+          Rồi một ngày, Bá Uôn nghĩ: những sản phẩm tuyệt vời nếu chỉ giữ riêng
+          mình thì thật ích kỷ. Vì vậy anh quyết định chia sẻ niềm đam mê với mọi
+          người, để những sản phẩm thực sự chất lượng đến với những ai có duyên
+          gặp được <em>(số lượng chỉ có hạn)</em>.
         </p>
 
         <h2 className="pt-2 font-serif text-xl font-bold text-bamboo-800">
