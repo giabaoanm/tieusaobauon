@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export const metadata = {
   title: "Cẩm nang & chia sẻ",
   description:
@@ -60,6 +62,35 @@ export default function CamNangPage() {
             Chỉ những ai đã từng làm sáo, tiêu từ A–Z bằng hai loại trúc Hà
             Giang và Cao Bằng mới thấu hết nỗi khổ — sướng, được — mất giữa hai
             loại trúc này.
+          </p>
+
+          {/* Ảnh trúc thật vừa uốn nắn */}
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+            <figure className="m-0">
+              <div className="relative aspect-[4/3] overflow-hidden rounded-xl border border-bamboo-200 bg-bamboo-100">
+                <Image
+                  src="/cam-nang/truc-uon-1.jpg"
+                  alt="Trúc làm tiêu vừa được uốn nắn, phơi nắng"
+                  fill
+                  sizes="(max-width: 640px) 100vw, 50vw"
+                  className="object-cover"
+                />
+              </div>
+            </figure>
+            <figure className="m-0">
+              <div className="relative aspect-[4/3] overflow-hidden rounded-xl border border-bamboo-200 bg-bamboo-100">
+                <Image
+                  src="/cam-nang/truc-uon-2.jpg"
+                  alt="Phôi trúc làm tiêu sau khi uốn nắn"
+                  fill
+                  sizes="(max-width: 640px) 100vw, 50vw"
+                  className="object-cover"
+                />
+              </div>
+            </figure>
+          </div>
+          <p className="text-center text-xs text-bamboo-500">
+            Những cây trúc làm tiêu sau khi uốn nắn.
           </p>
           <p>
             <strong>Khi mua:</strong> Trúc Cao Bằng dễ mua, anh em bán giá phải
