@@ -9,7 +9,7 @@ export default async function AdminLoginPage() {
   // Đã đăng nhập rồi thì vào thẳng dashboard
   if (await isLoggedIn()) redirect("/admin");
 
-  const twoFactor = is2FAEnabled();
+  const twoFactor = await is2FAEnabled();
 
   return (
     <div className="mx-auto max-w-md px-4 py-20">

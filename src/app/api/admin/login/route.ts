@@ -47,14 +47,15 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Dữ liệu không hợp lệ." }, { status: 400 });
   }
 
+  const twoFA = await is2FAEnabled();
   const passOk = !!body.password && (await verifyPassword(body.password));
-  const totpOk = is2FAEnabled() ? verifyTotp(body.totp || "") : true;
+  const totpOk = twoFA ? await verifyTotp(body.totp || "") : true;
 
   if (!passOk || !totpOk) {
     recordFailure(ip);
     // Thông báo chung chung, không tiết lộ sai ở đâu (chống dò)
     const msg =
-      is2FAEnabled() && passOk && !totpOk
+      twoFA && passOk && !totpOk
         ? "Mã xác thực 2 lớp không đúng."
         : "Thông tin đăng nhập không đúng.";
     return NextResponse.json({ error: msg }, { status: 401 });

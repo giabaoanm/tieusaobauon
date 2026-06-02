@@ -8,6 +8,35 @@ import { getSupabaseAdmin, isSupabaseConfigured } from "@/lib/supabase";
 
 const SETTINGS_TABLE = "app_settings";
 const PW_KEY = "admin_password_hash";
+const TOTP_KEY = "admin_totp_secret";
+
+async function getSetting(key: string): Promise<string | null> {
+  if (!isSupabaseConfigured()) return null;
+  try {
+    const sb = getSupabaseAdmin();
+    const { data } = await sb
+      .from(SETTINGS_TABLE)
+      .select("value")
+      .eq("key", key)
+      .maybeSingle();
+    return data?.value || null;
+  } catch {
+    return null;
+  }
+}
+
+async function setSetting(key: string, value: string): Promise<void> {
+  const sb = getSupabaseAdmin();
+  const { error } = await sb
+    .from(SETTINGS_TABLE)
+    .upsert({ key, value, updated_at: new Date().toISOString() });
+  if (error) throw new Error(error.message);
+}
+
+async function deleteSetting(key: string): Promise<void> {
+  const sb = getSupabaseAdmin();
+  await sb.from(SETTINGS_TABLE).delete().eq("key", key);
+}
 
 // ──────────────────────────────────────────────────────────────
 // Xác thực khu vực quản trị.
@@ -27,31 +56,14 @@ function timingSafeEqualStr(a: string, b: string): boolean {
   return crypto.timingSafeEqual(ba, bb);
 }
 
-// Đọc hash mật khẩu đã lưu trong Supabase (nếu có) — cho phép đổi
-// mật khẩu ngay trên web mà không cần sửa biến môi trường.
+// Đọc hash mật khẩu đã lưu trong Supabase (cho phép đổi mật khẩu trên web).
 async function getStoredPasswordHash(): Promise<string | null> {
-  if (!isSupabaseConfigured()) return null;
-  try {
-    const sb = getSupabaseAdmin();
-    const { data } = await sb
-      .from(SETTINGS_TABLE)
-      .select("value")
-      .eq("key", PW_KEY)
-      .maybeSingle();
-    return data?.value || null;
-  } catch {
-    return null;
-  }
+  return getSetting(PW_KEY);
 }
 
 /** Lưu hash mật khẩu mới vào Supabase. */
 export async function setAdminPassword(newPassword: string): Promise<void> {
-  const hash = bcrypt.hashSync(newPassword, 12);
-  const sb = getSupabaseAdmin();
-  const { error } = await sb
-    .from(SETTINGS_TABLE)
-    .upsert({ key: PW_KEY, value: hash, updated_at: new Date().toISOString() });
-  if (error) throw new Error(error.message);
+  await setSetting(PW_KEY, bcrypt.hashSync(newPassword, 12));
 }
 
 // So khớp mật khẩu với một chuỗi hash (hỗ trợ cả bcrypt thô và base64)
@@ -88,14 +100,19 @@ export async function verifyPassword(input: string): Promise<boolean> {
   return false;
 }
 
-/** 2FA có được bật không? */
-export function is2FAEnabled(): boolean {
-  return !!process.env.ADMIN_TOTP_SECRET;
+// Lấy secret 2FA: ưu tiên Supabase (bật trên web), dự phòng env.
+async function getTotpSecret(): Promise<string | null> {
+  return (await getSetting(TOTP_KEY)) || process.env.ADMIN_TOTP_SECRET || null;
 }
 
-/** Xác minh mã TOTP 6 số. */
-export function verifyTotp(code: string): boolean {
-  const secret = process.env.ADMIN_TOTP_SECRET;
+/** 2FA có đang bật không? */
+export async function is2FAEnabled(): Promise<boolean> {
+  return !!(await getTotpSecret());
+}
+
+/** Xác minh mã TOTP 6 số (theo secret đang bật). */
+export async function verifyTotp(code: string): Promise<boolean> {
+  const secret = await getTotpSecret();
   if (!secret) return true; // 2FA tắt → coi như hợp lệ
   if (!code) return false;
   try {
@@ -103,6 +120,36 @@ export function verifyTotp(code: string): boolean {
   } catch {
     return false;
   }
+}
+
+/** Tạo secret 2FA mới + link otpauth (để vẽ mã QR). Chưa lưu. */
+export function newTotpSecret(): { secret: string; otpauth: string } {
+  const secret = authenticator.generateSecret();
+  const otpauth = authenticator.keyuri(
+    "admin",
+    "Dong tieu Ba Uon",
+    secret,
+  );
+  return { secret, otpauth };
+}
+
+/** Kiểm tra mã 6 số khớp với một secret cụ thể (lúc thiết lập). */
+export function checkTotp(code: string, secret: string): boolean {
+  try {
+    return authenticator.check(code.trim(), secret);
+  } catch {
+    return false;
+  }
+}
+
+/** Bật 2FA: lưu secret vào Supabase. */
+export async function enable2FA(secret: string): Promise<void> {
+  await setSetting(TOTP_KEY, secret);
+}
+
+/** Tắt 2FA: xóa secret. */
+export async function disable2FA(): Promise<void> {
+  await deleteSetting(TOTP_KEY);
 }
 
 /** Sinh token phiên (ký HMAC) để đặt vào cookie sau khi đăng nhập. */
