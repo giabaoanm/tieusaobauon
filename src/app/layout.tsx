@@ -36,6 +36,9 @@ export const metadata: Metadata = {
     "động tiêu Sơn La",
   ],
   alternates: { canonical: "/" },
+  verification: {
+    google: "8G8ynWA6T63TUyxAdglbWoocC9i6TiRoi3PdlWbY6uc",
+  },
   openGraph: {
     title: "Động tiêu Bá Uôn — Động tiêu, sáo trúc thủ công cao cấp",
     description:
