@@ -27,7 +27,7 @@ export default function ProductBrowser({
 }) {
   const [type, setType] = useState<ProductType | "all">(initialType ?? "all");
   const [tone, setTone] = useState<Tone | "all">("all");
-  const [maxPrice, setMaxPrice] = useState<number>(1000000);
+  const [maxPrice, setMaxPrice] = useState<number>(25000000);
   const [sort, setSort] = useState<SortKey>("popular");
   const [filtersOpen, setFiltersOpen] = useState(false); // mở/đóng lọc trên ĐT
 
@@ -112,9 +112,9 @@ export default function ProductBrowser({
           </h3>
           <input
             type="range"
-            min={200000}
-            max={1000000}
-            step={50000}
+            min={100000}
+            max={25000000}
+            step={100000}
             value={maxPrice}
             onChange={(e) => setMaxPrice(Number(e.target.value))}
             className="w-full accent-bamboo-600"
