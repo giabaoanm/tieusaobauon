@@ -35,6 +35,9 @@ export default function VideoButton({
     };
   }, [open]);
 
+  // Chưa có video thì không hiện nút "Nghe thử"
+  if (!videoUrl) return null;
+
   const btnClass =
     variant === "full"
       ? "inline-flex items-center justify-center gap-2 rounded-full bg-clay-600 px-6 py-3 font-medium text-white transition hover:bg-clay-700"
