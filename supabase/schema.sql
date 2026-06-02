@@ -60,3 +60,14 @@ create index if not exists orders_created_idx on public.orders (created_at desc)
 
 -- Bật RLS, không policy công khai (chỉ server truy cập qua secret key).
 alter table public.orders enable row level security;
+
+-- ──────────────────────────────────────────────────────────────
+-- Bảng cấu hình chung (vd: lưu mật khẩu admin để đổi ngay trên web)
+-- ──────────────────────────────────────────────────────────────
+create table if not exists public.app_settings (
+  key        text primary key,
+  value      text not null,
+  updated_at timestamptz default now()
+);
+
+alter table public.app_settings enable row level security;

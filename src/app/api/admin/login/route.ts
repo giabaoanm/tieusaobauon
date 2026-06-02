@@ -47,7 +47,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Dữ liệu không hợp lệ." }, { status: 400 });
   }
 
-  const passOk = !!body.password && verifyPassword(body.password);
+  const passOk = !!body.password && (await verifyPassword(body.password));
   const totpOk = is2FAEnabled() ? verifyTotp(body.totp || "") : true;
 
   if (!passOk || !totpOk) {

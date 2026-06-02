@@ -4,6 +4,10 @@ import bcrypt from "bcryptjs";
 import { authenticator } from "otplib";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { getSupabaseAdmin, isSupabaseConfigured } from "@/lib/supabase";
+
+const SETTINGS_TABLE = "app_settings";
+const PW_KEY = "admin_password_hash";
 
 // ──────────────────────────────────────────────────────────────
 // Xác thực khu vực quản trị.
@@ -23,27 +27,62 @@ function timingSafeEqualStr(a: string, b: string): boolean {
   return crypto.timingSafeEqual(ba, bb);
 }
 
-/** Kiểm tra mật khẩu nhập vào. */
-export function verifyPassword(input: string): boolean {
-  let hash = process.env.ADMIN_PASSWORD_HASH;
-  if (hash) {
-    // Hash lưu base64 (mặc định, tránh lỗi ký tự '$' với dotenv).
-    // Nếu lỡ dán hash thô ($2...) thì vẫn dùng được.
-    if (!hash.startsWith("$2")) {
-      try {
-        const decoded = Buffer.from(hash, "base64").toString("utf8");
-        if (decoded.startsWith("$2")) hash = decoded;
-      } catch {
-        /* giữ nguyên */
-      }
-    }
+// Đọc hash mật khẩu đã lưu trong Supabase (nếu có) — cho phép đổi
+// mật khẩu ngay trên web mà không cần sửa biến môi trường.
+async function getStoredPasswordHash(): Promise<string | null> {
+  if (!isSupabaseConfigured()) return null;
+  try {
+    const sb = getSupabaseAdmin();
+    const { data } = await sb
+      .from(SETTINGS_TABLE)
+      .select("value")
+      .eq("key", PW_KEY)
+      .maybeSingle();
+    return data?.value || null;
+  } catch {
+    return null;
+  }
+}
+
+/** Lưu hash mật khẩu mới vào Supabase. */
+export async function setAdminPassword(newPassword: string): Promise<void> {
+  const hash = bcrypt.hashSync(newPassword, 12);
+  const sb = getSupabaseAdmin();
+  const { error } = await sb
+    .from(SETTINGS_TABLE)
+    .upsert({ key: PW_KEY, value: hash, updated_at: new Date().toISOString() });
+  if (error) throw new Error(error.message);
+}
+
+// So khớp mật khẩu với một chuỗi hash (hỗ trợ cả bcrypt thô và base64)
+function matchHash(input: string, rawHash: string): boolean {
+  let hash = rawHash;
+  if (!hash.startsWith("$2")) {
     try {
-      return bcrypt.compareSync(input, hash);
+      const decoded = Buffer.from(hash, "base64").toString("utf8");
+      if (decoded.startsWith("$2")) hash = decoded;
     } catch {
-      return false;
+      /* giữ nguyên */
     }
   }
-  // Dự phòng: mật khẩu thô (cảnh báo: nên dùng hash)
+  try {
+    return bcrypt.compareSync(input, hash);
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Kiểm tra mật khẩu nhập vào. Ưu tiên hash đã lưu trên Supabase
+ * (đổi được trên web), rồi tới ADMIN_PASSWORD_HASH, cuối cùng mật khẩu thô.
+ */
+export async function verifyPassword(input: string): Promise<boolean> {
+  const stored = await getStoredPasswordHash();
+  if (stored) return matchHash(input, stored);
+
+  const envHash = process.env.ADMIN_PASSWORD_HASH;
+  if (envHash) return matchHash(input, envHash);
+
   const plain = process.env.ADMIN_PASSWORD;
   if (plain) return timingSafeEqualStr(input, plain);
   return false;

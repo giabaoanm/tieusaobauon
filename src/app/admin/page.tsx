@@ -34,6 +34,12 @@ export default async function AdminPage() {
           >
             Quản lý sản phẩm
           </Link>
+          <Link
+            href="/admin/doi-mat-khau"
+            className="rounded-full border border-bamboo-300 px-4 py-2 text-sm font-medium text-bamboo-700 transition hover:bg-bamboo-50"
+          >
+            Đổi mật khẩu
+          </Link>
           <AdminLogoutButton />
         </div>
       </div>
