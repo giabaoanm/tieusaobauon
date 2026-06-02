@@ -30,9 +30,14 @@ export default async function HomePage() {
                 Thổi hồn vào trúc
               </h1>
               <p className="mt-4 text-lg text-white/90">
-                Động tiêu, sáo trúc làm thủ công từ đam mê cháy bỏng — dồn hết
-                tâm sức thổi hồn vào từng cây trúc, tạo nên những cây độc bản.
-                Mỗi cây một thanh âm riêng, nghe thử trực tiếp qua video.
+                Động tiêu, sáo trúc làm thủ công từ niềm đam mê cháy bỏng, người
+                làm đã dồn hết tâm, sức để thổi hồn vào từng cây trúc, tạo nên
+                những cây động tiêu, sáo trúc có một không hai. Mỗi cây động
+                tiêu, sáo trúc đều chất chứa thanh âm bốn mùa, mang theo hương
+                rừng, đất núi của người Việt.
+              </p>
+              <p className="mt-3 text-lg font-semibold text-white">
+                Hãy khám phá và nâng tầm trải nghiệm âm nhạc của bạn!
               </p>
               <div className="mt-8 flex flex-wrap gap-4">
                 <Link
