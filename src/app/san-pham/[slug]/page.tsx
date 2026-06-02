@@ -44,8 +44,31 @@ export default async function ProductDetailPage({
     .filter((p) => p.type === product.type && p.id !== product.id)
     .slice(0, 4);
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: product.name,
+    image: [product.imageMain, product.imageDetail].filter(Boolean),
+    description: product.description,
+    category: PRODUCT_TYPE_LABELS[product.type],
+    brand: { "@type": "Brand", name: "Động tiêu Bá Uôn" },
+    offers: {
+      "@type": "Offer",
+      price: product.price,
+      priceCurrency: "VND",
+      availability: product.sold
+        ? "https://schema.org/SoldOut"
+        : "https://schema.org/InStock",
+      url: `https://tieutrucviet.com.vn/san-pham/${product.slug}`,
+    },
+  };
+
   return (
     <div className="mx-auto max-w-6xl px-4 py-8">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {/* Breadcrumb */}
       <nav className="mb-6 text-sm text-bamboo-600">
         <Link href="/" className="hover:underline">

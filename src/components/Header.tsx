@@ -7,7 +7,6 @@ import { useCart } from "@/lib/cart";
 const NAV_LINKS = [
   { href: "/", label: "Trang chủ" },
   { href: "/san-pham", label: "Sản phẩm" },
-  { href: "/cam-nang", label: "Cẩm nang" },
   { href: "/gioi-thieu", label: "Giới thiệu" },
   { href: "/tra-cuu-don-hang", label: "Tra cứu đơn" },
   { href: "/lien-he", label: "Liên hệ" },

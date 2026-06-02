@@ -26,6 +26,9 @@ export default function ContactPage() {
             0993 666 625
           </a>
         </p>
+        <p>
+          📍 Địa chỉ: Số 28, đường Hồ 50, phường Chiềng Sinh, thành phố Sơn La
+        </p>
         <p>🕘 Giờ làm việc: 8h00 – 20h00 hàng ngày</p>
       </div>
     </div>

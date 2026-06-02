@@ -24,9 +24,8 @@ export default function CamNangPage() {
         </h2>
         <div className="mt-4 space-y-4 leading-relaxed text-bamboo-700">
           <p>
-            Là người mới chơi và mới làm sáo, trong quá trình làm và thổi, tôi
-            phát hiện một thứ tác động rất mạnh đến âm sắc cây sáo mà ít người để
-            ý: <strong>cái nút sáo</strong>.
+            Trong quá trình làm và thổi sáo, tôi phát hiện một thứ tác động rất
+            mạnh đến âm sắc cây sáo mà ít người để ý: <strong>cái nút sáo</strong>.
           </p>
           <p>
             Mọi người thường chú ý đến chất nứa, chất trúc, cách xử lý, cách
