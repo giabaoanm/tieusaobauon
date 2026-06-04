@@ -30,7 +30,8 @@ export default async function HomePage() {
             bốn mùa, mang theo hương rừng, đất núi của người&nbsp;Việt.
           </p>
           <p className="mt-4 text-lg font-semibold text-white md:text-xl">
-            Hãy khám phá và nâng tầm trải nghiệm âm nhạc của bạn!
+            Hãy trải nghiệm và thăng hoa cùng với những giai điệu âm nhạc của
+            bạn!
           </p>
         </div>
       </section>
