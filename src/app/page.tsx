@@ -17,56 +17,67 @@ export default async function HomePage() {
 
   return (
     <div>
-      {/* Hero — 2 nửa: chữ bên trái, ảnh động tiêu thật bên phải */}
-      <section className="relative overflow-hidden border-b border-bamboo-700">
-        <div className="grid md:grid-cols-2">
-          {/* Nửa trái: nội dung trên nền vàng trúc */}
-          <div className="flex items-center bg-gradient-to-br from-bamboo-600 to-bamboo-800 px-4 py-16 text-white md:py-28">
-            <div className="mx-auto max-w-xl md:ml-auto md:mr-10">
-              <p className="mb-3 text-sm font-semibold uppercase tracking-wider text-bamboo-100">
-                Nhạc cụ dân tộc thủ công
-              </p>
-              <h1 className="font-serif text-4xl font-bold leading-tight md:text-6xl">
-                Thổi hồn vào trúc
-              </h1>
-              <p className="mt-4 text-lg text-white/90">
-                Động tiêu, sáo trúc làm thủ công từ niềm đam mê cháy bỏng, người
-                làm đã dồn hết tâm, sức để thổi hồn vào từng cây trúc, tạo nên
-                những cây động tiêu, sáo trúc có một không hai. Mỗi cây động
-                tiêu, sáo trúc đều chất chứa thanh âm bốn mùa, mang theo hương
-                rừng, đất núi của người Việt.
-              </p>
-              <p className="mt-3 text-lg font-semibold text-white">
-                Hãy khám phá và nâng tầm trải nghiệm âm nhạc của bạn!
-              </p>
-              <div className="mt-8 flex flex-wrap gap-4">
-                <Link
-                  href="/san-pham"
-                  className="rounded-full bg-white px-6 py-3 font-medium text-bamboo-900 transition hover:bg-bamboo-50"
-                >
-                  Khám phá sản phẩm
-                </Link>
-                <Link
-                  href="/gioi-thieu"
-                  className="rounded-full border border-white/60 px-6 py-3 font-medium text-white transition hover:bg-white/10"
-                >
-                  Câu chuyện của chúng tôi
-                </Link>
+      {/* Hero — banner tiên ông thổi tiêu, chữ overlay phía dưới */}
+      <section className="relative w-full overflow-hidden border-b border-bamboo-700">
+        <div className="relative h-[480px] sm:h-auto sm:aspect-[2/1] md:aspect-[5/2] lg:aspect-[3/1]">
+          <Image
+            src="/banner/hero-tien-ong.jpg"
+            alt="Tiên ông thổi động tiêu trên non cao lúc hoàng hôn"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-[18%_center]"
+          />
+          {/* Lớp phủ tối để chữ rõ */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/30 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/55 via-black/10 to-transparent" />
+
+          {/* Nội dung overlay */}
+          <div className="absolute inset-0 z-10">
+            <div className="mx-auto flex h-full max-w-6xl flex-col justify-end px-4 pb-7 sm:pb-10 md:pb-14">
+              <div className="w-full max-w-xl">
+                <p className="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-amber-200 drop-shadow sm:text-sm">
+                  Nhạc cụ dân tộc thủ công
+                </p>
+                <h1 className="font-serif text-3xl font-bold leading-tight text-white drop-shadow-lg sm:text-5xl md:text-6xl">
+                  Thổi hồn vào trúc
+                </h1>
+                <p className="mt-2 max-w-md text-sm text-white/90 drop-shadow sm:mt-3 sm:text-lg">
+                  Động tiêu &amp; sáo trúc làm thủ công — mang theo thanh âm bốn
+                  mùa, hương rừng và đất núi của người Việt.
+                </p>
+                <div className="mt-4 flex flex-wrap gap-3 sm:mt-7 sm:gap-4">
+                  <Link
+                    href="/san-pham"
+                    className="rounded-full bg-white px-5 py-2.5 text-sm font-medium text-bamboo-900 shadow-lg transition hover:bg-bamboo-50 sm:px-6 sm:py-3 sm:text-base"
+                  >
+                    Khám phá sản phẩm
+                  </Link>
+                  <Link
+                    href="/gioi-thieu"
+                    className="rounded-full border border-white/70 px-5 py-2.5 text-sm font-medium text-white backdrop-blur-sm transition hover:bg-white/15 sm:px-6 sm:py-3 sm:text-base"
+                  >
+                    Câu chuyện của chúng tôi
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
+        </div>
+      </section>
 
-          {/* Nửa phải: ảnh động tiêu thật của shop */}
-          <div className="relative min-h-[360px] md:min-h-0">
-            <Image
-              src="/banner/dong-tieu-real.jpg"
-              alt="Động tiêu trúc thủ công - Bá Uôn"
-              fill
-              priority
-              sizes="(max-width: 768px) 100vw, 50vw"
-              className="object-cover object-center"
-            />
-          </div>
+      {/* Dải giới thiệu — giữ đoạn văn đầy đủ trên nền vàng trúc */}
+      <section className="bg-gradient-to-br from-bamboo-600 to-bamboo-800 px-4 py-12 text-white md:py-16">
+        <div className="mx-auto max-w-3xl text-center">
+          <p className="text-base leading-relaxed text-white/90 md:text-lg">
+            Động tiêu, sáo trúc làm thủ công từ niềm đam mê cháy bỏng — người làm
+            đã dồn hết tâm, sức để thổi hồn vào từng cây trúc, tạo nên những cây
+            động tiêu, sáo trúc có một không hai. Mỗi cây đều chất chứa thanh âm
+            bốn mùa, mang theo hương rừng, đất núi của người Việt.
+          </p>
+          <p className="mt-4 text-lg font-semibold text-white md:text-xl">
+            Hãy khám phá và nâng tầm trải nghiệm âm nhạc của bạn!
+          </p>
         </div>
       </section>
 

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 import { useCart } from "@/lib/cart";
 
@@ -19,8 +20,15 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-40 border-b border-bamboo-200 bg-bamboo-50/90 backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4">
-        <Link href="/" className="flex items-center gap-2" onClick={() => setMenuOpen(false)}>
-          <span className="text-2xl">🎋</span>
+        <Link href="/" className="flex items-center gap-2.5" onClick={() => setMenuOpen(false)}>
+          <Image
+            src="/logo.png"
+            alt="Logo Động tiêu Bá Uôn"
+            width={44}
+            height={44}
+            priority
+            className="h-11 w-11 rounded-full object-cover ring-1 ring-bamboo-300"
+          />
           <span className="font-serif text-lg font-bold text-bamboo-800 sm:text-xl">
             Động tiêu Bá Uôn
           </span>

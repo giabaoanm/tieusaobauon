@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 const LINKS = [
   { href: "/", label: "Trang chủ" },
@@ -15,8 +16,14 @@ export default function Footer() {
       <div className="mx-auto max-w-6xl px-4 py-10">
         <div className="grid gap-8 md:grid-cols-3">
           <div>
-            <div className="mb-3 flex items-center gap-2">
-              <span className="text-2xl">🎋</span>
+            <div className="mb-3 flex items-center gap-2.5">
+              <Image
+                src="/logo.png"
+                alt="Logo Động tiêu Bá Uôn"
+                width={44}
+                height={44}
+                className="h-11 w-11 rounded-full object-cover ring-1 ring-bamboo-300"
+              />
               <span className="font-serif text-lg font-bold text-bamboo-800">
                 Động tiêu Bá Uôn
               </span>

@@ -16,7 +16,8 @@
       "Bash(/usr/bin/sed -i '' -E 's/    stock: [0-9]+,/    sold: false,/' src/data/products.ts)",
       "mcp__e5788911-4c91-4ddc-9db4-05110a1710f2__assets",
       "Bash(curl -s -o public/banner/banner-1.jpg \"https://assets.pixelcut.app/org/7e696627-8e92-447c-8f40-0a43a467fbf7/media/7d3aff0b-47d1-4d27-8384-d1a5deab6768_1780334620.jpg?Expires=1780421060&KeyName=px-assets-key-1&Signature=_iuOkqk_sMzJHE7fZTjT5dt1t94=\")",
-      "Bash(curl -s -o public/banner/banner-2.jpg \"https://assets.pixelcut.app/org/7e696627-8e92-447c-8f40-0a43a467fbf7/media/e94825b0-55c2-451c-9075-80e5eaa6e4da_1780334620.jpg?Expires=1780421069&KeyName=px-assets-key-1&Signature=-e3PcIml2KDk_PY5SUTHs18gbIE=\")"
+      "Bash(curl -s -o public/banner/banner-2.jpg \"https://assets.pixelcut.app/org/7e696627-8e92-447c-8f40-0a43a467fbf7/media/e94825b0-55c2-451c-9075-80e5eaa6e4da_1780334620.jpg?Expires=1780421069&KeyName=px-assets-key-1&Signature=-e3PcIml2KDk_PY5SUTHs18gbIE=\")",
+      "Bash(/bin/sh -c 'export PATH=\"$HOME/.local/node/bin:$PATH\"; exec node node_modules/next/dist/bin/next dev -p 3007')"
     ]
   }
 }
