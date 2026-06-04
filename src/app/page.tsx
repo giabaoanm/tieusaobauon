@@ -23,11 +23,11 @@ export default async function HomePage() {
       {/* Dải giới thiệu — giữ đoạn văn đầy đủ trên nền vàng trúc */}
       <section className="bg-gradient-to-br from-bamboo-600 to-bamboo-800 px-4 py-12 text-white md:py-16">
         <div className="mx-auto max-w-3xl text-center">
-          <p className="text-base leading-relaxed text-white/90 md:text-lg">
+          <p className="text-pretty text-base leading-relaxed text-white/90 md:text-lg">
             Động tiêu, sáo trúc làm thủ công từ niềm đam mê cháy bỏng — người làm
             đã dồn hết tâm, sức để thổi hồn vào từng cây trúc, tạo nên những cây
             động tiêu, sáo trúc có một không hai. Mỗi cây đều chất chứa thanh âm
-            bốn mùa, mang theo hương rừng, đất núi của người Việt.
+            bốn mùa, mang theo hương rừng, đất núi của người&nbsp;Việt.
           </p>
           <p className="mt-4 text-lg font-semibold text-white md:text-xl">
             Hãy khám phá và nâng tầm trải nghiệm âm nhạc của bạn!
