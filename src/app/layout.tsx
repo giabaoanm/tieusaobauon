@@ -75,6 +75,7 @@ export default function RootLayout({
     "@type": "Store",
     name: "Động tiêu Bá Uôn",
     image: `${SITE_URL}/banner/hero-tien-ong.jpg`,
+    logo: `${SITE_URL}/logo-512.png`,
     url: SITE_URL,
     telephone: "+84993666625",
     description:
