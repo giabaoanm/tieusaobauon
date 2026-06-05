@@ -14,6 +14,28 @@ interface VideoButtonProps {
   variant?: "full" | "compact";
 }
 
+// Chuyển MỌI dạng link YouTube về dạng nhúng (embed) để iframe phát được:
+//   youtube.com/watch?v=ID · youtu.be/ID · /shorts/ID · /live/ID · /embed/ID · hoặc dán thẳng ID
+function toYouTubeEmbed(url: string): string {
+  const u = (url || "").trim();
+  if (!u) return "";
+  const patterns = [
+    /youtu\.be\/([A-Za-z0-9_-]{6,})/,
+    /[?&]v=([A-Za-z0-9_-]{6,})/,
+    /youtube\.com\/embed\/([A-Za-z0-9_-]{6,})/,
+    /youtube\.com\/shorts\/([A-Za-z0-9_-]{6,})/,
+    /youtube\.com\/live\/([A-Za-z0-9_-]{6,})/,
+  ];
+  for (const p of patterns) {
+    const m = u.match(p);
+    if (m) return `https://www.youtube.com/embed/${m[1]}`;
+  }
+  // Người dùng dán thẳng mã video (11 ký tự)
+  if (/^[A-Za-z0-9_-]{11}$/.test(u)) return `https://www.youtube.com/embed/${u}`;
+  // Không nhận diện được → dùng nguyên link (vd link nhúng nền tảng khác)
+  return u;
+}
+
 export default function VideoButton({
   videoUrl,
   productName,
@@ -37,6 +59,8 @@ export default function VideoButton({
 
   // Chưa có video thì không hiện nút "Nghe thử"
   if (!videoUrl) return null;
+
+  const embedUrl = toYouTubeEmbed(videoUrl);
 
   const btnClass =
     variant === "full"
@@ -77,7 +101,7 @@ export default function VideoButton({
             <div className="overflow-hidden rounded-xl bg-black shadow-2xl">
               <div className="relative aspect-video">
                 <iframe
-                  src={`${videoUrl}?autoplay=1`}
+                  src={`${embedUrl}${embedUrl.includes("?") ? "&" : "?"}autoplay=1&rel=0`}
                   title={`Video thổi thử ${productName}`}
                   className="absolute inset-0 h-full w-full"
                   allow="autoplay; encrypted-media; picture-in-picture"

@@ -2,7 +2,7 @@
 // Ở Sprint 1 dữ liệu nằm trong file mẫu; Sprint 2+ sẽ thay bằng Supabase/PostgreSQL.
 
 // Số ô sản phẩm tối đa (mỗi cây là độc bản, đăng từng cây một)
-export const MAX_PRODUCTS = 21;
+export const MAX_PRODUCTS = 61;
 
 // Tone âm nhạc (nốt gốc của cây sáo/tiêu)
 export type Tone =

@@ -104,6 +104,7 @@ export default async function ProductDetailPage({
 
           {/* Thông số sản phẩm */}
           <dl className="mt-6 space-y-3 rounded-2xl border border-bamboo-200 bg-white p-5">
+            <Spec label="🎵 Tone" value={product.toneLabel} />
             {product.lengthCm > 0 && (
               <Spec label="📏 Kích thước" value={`Dài ${product.lengthCm} cm`} />
             )}

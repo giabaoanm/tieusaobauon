@@ -206,7 +206,7 @@ export default function AdminProductManager({
         )}
         {enabled && list.length >= MAX_PRODUCTS && (
           <span className="text-sm text-clay-600">
-            Đã đủ 21 ô — hãy xóa hoặc thay nội dung ô có sẵn.
+            Đã đủ {MAX_PRODUCTS} ô — hãy xóa hoặc thay nội dung ô có sẵn.
           </span>
         )}
       </div>
@@ -311,13 +311,17 @@ export default function AdminProductManager({
               />
             </Field>
 
-            <Field label="Loại (tự nhập)">
-              <input
+            <Field label="Loại">
+              <select
                 className="inp"
                 value={form.loai}
                 onChange={(e) => set("loai", e.target.value)}
-                placeholder="vd: Trúc tím Cao Bằng / Bát khổng / Nứa"
-              />
+              >
+                <option value="">— Chọn loại —</option>
+                <option value="Động tiêu bát khổng">Động tiêu bát khổng</option>
+                <option value="Sáo trúc 6 lỗ">Sáo trúc 6 lỗ</option>
+                <option value="Loại khác">Loại khác</option>
+              </select>
             </Field>
 
             <Field label="Trạng thái">
