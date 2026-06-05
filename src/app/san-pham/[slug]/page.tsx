@@ -105,18 +105,30 @@ export default async function ProductDetailPage({
           {/* Thông số sản phẩm */}
           <dl className="mt-6 space-y-3 rounded-2xl border border-bamboo-200 bg-white p-5">
             <Spec label="🎵 Tone" value={product.toneLabel} />
-            {product.lengthCm > 0 && (
-              <Spec label="📏 Kích thước" value={`Dài ${product.lengthCm} cm`} />
-            )}
-            {product.diameterMm > 0 && (
-              <Spec
-                label="⭕ Đường kính miệng thổi"
-                value={`Ø ${product.diameterMm} mm`}
-              />
-            )}
-            {!!product.weightGrams && product.weightGrams > 0 && (
-              <Spec label="⚖️ Trọng lượng" value={`${product.weightGrams} g`} />
-            )}
+            <Spec
+              label="📏 Kích thước"
+              value={
+                product.lengthCm > 0
+                  ? `Dài ${product.lengthCm} cm`
+                  : "Đang cập nhật"
+              }
+            />
+            <Spec
+              label="⭕ Đường kính miệng thổi"
+              value={
+                product.diameterMm > 0
+                  ? `Ø ${product.diameterMm} mm`
+                  : "Đang cập nhật"
+              }
+            />
+            <Spec
+              label="⚖️ Trọng lượng"
+              value={
+                product.weightGrams && product.weightGrams > 0
+                  ? `${product.weightGrams} g`
+                  : "Đang cập nhật"
+              }
+            />
             <Spec label="🎋 Kiểu" value={PRODUCT_TYPE_LABELS[product.type]} />
             {!!product.loai && <Spec label="🏷️ Loại" value={product.loai} />}
             <Spec

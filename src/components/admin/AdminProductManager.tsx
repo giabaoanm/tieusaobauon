@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import type { Product } from "@/lib/types";
 import {
@@ -84,6 +84,21 @@ export default function AdminProductManager({
   const [form, setForm] = useState<FormState | null>(null);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
+  const [zoomImg, setZoomImg] = useState<string | null>(null);
+
+  // Đóng ảnh phóng to bằng Esc + khóa cuộn nền
+  useEffect(() => {
+    if (!zoomImg) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setZoomImg(null);
+    };
+    document.addEventListener("keydown", onKey);
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = "";
+    };
+  }, [zoomImg]);
 
   function openNew() {
     setError("");
@@ -444,7 +459,10 @@ export default function AdminProductManager({
             key={p.id}
             className="overflow-hidden rounded-2xl border border-bamboo-200 bg-white"
           >
-            <div className="relative aspect-video bg-bamboo-100">
+            <div
+              onClick={() => p.imageMain && setZoomImg(p.imageMain)}
+              className="relative aspect-video cursor-zoom-in bg-bamboo-100"
+            >
               {p.imageMain && (
                 <Image
                   src={p.imageMain}
@@ -517,7 +535,10 @@ export default function AdminProductManager({
                 key={p.id}
                 className="overflow-hidden rounded-2xl border border-bamboo-200 bg-bamboo-50"
               >
-                <div className="relative aspect-video bg-bamboo-100">
+                <div
+                  onClick={() => p.imageMain && setZoomImg(p.imageMain)}
+                  className="relative aspect-video cursor-zoom-in bg-bamboo-100"
+                >
                   {p.imageMain && (
                     <Image
                       src={p.imageMain}
@@ -529,6 +550,9 @@ export default function AdminProductManager({
                   )}
                   <span className="absolute right-2 top-2 rounded-full bg-bamboo-700 px-2.5 py-1 text-xs font-bold text-white">
                     ĐÃ LƯU TRỮ
+                  </span>
+                  <span className="absolute bottom-2 left-2 rounded-full bg-black/55 px-2 py-0.5 text-xs text-white">
+                    🔍 Phóng to
                   </span>
                 </div>
                 <div className="p-4">
@@ -570,6 +594,35 @@ export default function AdminProductManager({
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      )}
+
+      {/* Xem ảnh khổ lớn */}
+      {zoomImg && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 p-4"
+          onClick={() => setZoomImg(null)}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Ảnh khổ lớn"
+        >
+          <button
+            type="button"
+            onClick={() => setZoomImg(null)}
+            className="absolute right-4 top-4 z-10 text-3xl text-white hover:text-bamboo-200"
+            aria-label="Đóng"
+          >
+            ✕
+          </button>
+          <div className="relative h-full max-h-[88vh] w-full max-w-5xl">
+            <Image
+              src={zoomImg}
+              alt="Ảnh sản phẩm"
+              fill
+              sizes="100vw"
+              className="object-contain"
+            />
           </div>
         </div>
       )}
