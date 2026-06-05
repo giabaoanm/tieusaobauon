@@ -158,6 +158,24 @@ export default async function ProductDetailPage({
             />
           </div>
 
+          {/* Cam kết tạo niềm tin */}
+          <ul className="mt-5 grid grid-cols-1 gap-2 rounded-2xl border border-bamboo-200 bg-bamboo-50 p-4 text-sm text-bamboo-800 sm:grid-cols-2">
+            <li className="flex items-center gap-2">
+              <span className="text-bamboo-600">✓</span> Hàng độc bản — chỉ 1 cây
+              duy nhất
+            </li>
+            <li className="flex items-center gap-2">
+              <span className="text-bamboo-600">✓</span> Đã thổi thử kỹ, chuẩn âm
+            </li>
+            <li className="flex items-center gap-2">
+              <span className="text-bamboo-600">✓</span> Đổi trả trong 15 ngày
+            </li>
+            <li className="flex items-center gap-2">
+              <span className="text-bamboo-600">✓</span> Thanh toán an toàn, giao
+              tận nơi
+            </li>
+          </ul>
+
           {/* Mô tả */}
           <div className="mt-8">
             <h2 className="mb-2 font-semibold text-bamboo-800">Mô tả</h2>

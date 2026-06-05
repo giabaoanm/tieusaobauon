@@ -9,6 +9,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/san-pham",
     "/cam-nang",
     "/gioi-thieu",
+    "/chinh-sach",
     "/lien-he",
     "/tra-cuu-don-hang",
   ];

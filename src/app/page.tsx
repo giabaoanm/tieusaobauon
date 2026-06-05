@@ -1,6 +1,8 @@
 import Link from "next/link";
 import HeroBanner from "@/components/HeroBanner";
 import ProductCard from "@/components/ProductCard";
+import Testimonials from "@/components/Testimonials";
+import Faq from "@/components/Faq";
 import { getFeaturedProducts } from "@/lib/products-db";
 import { PRODUCT_TYPE_LABELS, ProductType } from "@/lib/types";
 
@@ -98,6 +100,12 @@ export default async function HomePage() {
           ))}
         </div>
       </section>
+
+      {/* Cảm nhận khách hàng */}
+      <Testimonials />
+
+      {/* Câu hỏi thường gặp */}
+      <Faq />
     </div>
   );
 }

@@ -6,6 +6,7 @@ const LINKS = [
   { href: "/san-pham", label: "Sản phẩm" },
   { href: "/cam-nang", label: "Cẩm nang & chia sẻ" },
   { href: "/gioi-thieu", label: "Giới thiệu" },
+  { href: "/chinh-sach", label: "Chính sách" },
   { href: "/tra-cuu-don-hang", label: "Tra cứu đơn hàng" },
   { href: "/lien-he", label: "Liên hệ" },
 ];
