@@ -72,8 +72,8 @@ export default function HeroBanner() {
                 Thổi hồn vào trúc
               </h1>
               <p className="mt-2 max-w-md text-sm text-white/90 drop-shadow sm:mt-3 sm:text-lg">
-                Động tiêu &amp; sáo trúc làm thủ công — mang theo thanh âm bốn
-                mùa, hương rừng và đất núi của người Việt.
+                Động tiêu &amp; sáo trúc làm thủ công — mang theo hương rừng, gió
+                núi, thanh âm bốn mùa của người Việt.
               </p>
               <div className="mt-4 flex flex-wrap gap-3 sm:mt-7 sm:gap-4">
                 <Link
