@@ -20,6 +20,8 @@ type FormState = {
   toneLabel: string;
   lengthCm: string;
   diameterMm: string;
+  weightGrams: string;
+  loai: string;
   price: string;
   sold: boolean;
   description: string;
@@ -36,6 +38,8 @@ const empty: FormState = {
   toneLabel: "",
   lengthCm: "",
   diameterMm: "",
+  weightGrams: "",
+  loai: "",
   price: "",
   sold: false,
   description: "",
@@ -54,6 +58,8 @@ function toForm(p: Product): FormState {
     toneLabel: p.toneLabel,
     lengthCm: String(p.lengthCm),
     diameterMm: String(p.diameterMm),
+    weightGrams: p.weightGrams ? String(p.weightGrams) : "",
+    loai: p.loai ?? "",
     price: String(p.price),
     sold: !!p.sold,
     description: p.description,
@@ -100,6 +106,8 @@ export default function AdminProductManager({
       toneLabel: form.toneLabel,
       lengthCm: Number(form.lengthCm) || 0,
       diameterMm: Number(form.diameterMm) || 0,
+      weightGrams: Number(form.weightGrams) || 0,
+      loai: form.loai,
       price: Number(form.price) || 0,
       sold: form.sold,
       description: form.description,
@@ -146,6 +154,8 @@ export default function AdminProductManager({
         toneLabel: p.toneLabel,
         lengthCm: p.lengthCm,
         diameterMm: p.diameterMm,
+        weightGrams: p.weightGrams ?? 0,
+        loai: p.loai ?? "",
         price: p.price,
         sold: !p.sold,
         description: p.description,
@@ -218,7 +228,7 @@ export default function AdminProductManager({
               />
             </Field>
 
-            <Field label="Loại">
+            <Field label="Kiểu">
               <select
                 className="inp"
                 value={form.type}
@@ -265,23 +275,48 @@ export default function AdminProductManager({
               />
             </Field>
 
-            <Field label="Chiều dài (cm)">
+            <Field label="Kích thước — chiều dài (cm)">
               <input
                 className="inp"
                 inputMode="numeric"
                 value={form.lengthCm}
-                onChange={(e) => set("lengthCm", e.target.value)}
+                onChange={(e) =>
+                  set("lengthCm", e.target.value.replace(/\D/g, ""))
+                }
                 placeholder="62"
               />
             </Field>
 
-            <Field label="Đường kính (mm)">
+            <Field label="Đường kính miệng thổi (mm)">
               <input
                 className="inp"
                 inputMode="numeric"
                 value={form.diameterMm}
-                onChange={(e) => set("diameterMm", e.target.value)}
+                onChange={(e) =>
+                  set("diameterMm", e.target.value.replace(/\D/g, ""))
+                }
                 placeholder="22"
+              />
+            </Field>
+
+            <Field label="Trọng lượng (gam)">
+              <input
+                className="inp"
+                inputMode="numeric"
+                value={form.weightGrams}
+                onChange={(e) =>
+                  set("weightGrams", e.target.value.replace(/\D/g, ""))
+                }
+                placeholder="120"
+              />
+            </Field>
+
+            <Field label="Loại (tự nhập)">
+              <input
+                className="inp"
+                value={form.loai}
+                onChange={(e) => set("loai", e.target.value)}
+                placeholder="vd: Trúc tím Cao Bằng / Bát khổng / Nứa"
               />
             </Field>
 

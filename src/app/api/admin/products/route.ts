@@ -66,6 +66,8 @@ function parseInput(data: Record<string, unknown>): ProductInput | string {
     toneLabel: str(data.toneLabel, 60) || undefined,
     lengthCm: num(data.lengthCm),
     diameterMm: num(data.diameterMm),
+    weightGrams: num(data.weightGrams),
+    loai: str(data.loai, 100),
     price: num(data.price),
     sold: !!data.sold,
     imageMain,

@@ -20,6 +20,8 @@ export interface ProductInput {
   toneLabel?: string;
   lengthCm: number;
   diameterMm: number;
+  weightGrams: number;
+  loai: string;
   price: number;
   sold: boolean;
   imageMain: string;
@@ -41,6 +43,8 @@ function rowToProduct(r: any): Product {
     toneLabel: r.tone_label || TONE_LABELS[r.tone as Tone] || r.tone,
     lengthCm: Number(r.length_cm) || 0,
     diameterMm: Number(r.diameter_mm) || 0,
+    weightGrams: Number(r.weight_g) || 0,
+    loai: r.loai || "",
     price: Number(r.price) || 0,
     sold: !!r.sold,
     imageMain: r.image_main || "",
@@ -51,8 +55,8 @@ function rowToProduct(r: any): Product {
   };
 }
 
-function inputToRow(input: ProductInput) {
-  return {
+function inputToRow(input: ProductInput, includeExtras = true) {
+  const row: Record<string, any> = {
     slug: input.slug,
     name: input.name,
     type: input.type,
@@ -69,6 +73,21 @@ function inputToRow(input: ProductInput) {
     featured: input.featured,
     is_active: true,
   };
+  // Cột mới (weight_g, loai) — nếu DB chưa thêm cột thì bỏ qua để vẫn lưu được.
+  if (includeExtras) {
+    row.weight_g = input.weightGrams || 0;
+    row.loai = input.loai || null;
+  }
+  return row;
+}
+
+// Lỗi "cột chưa tồn tại" (DB chưa chạy migration thêm weight_g/loai)
+function isMissingExtraColumn(message: string): boolean {
+  const m = message.toLowerCase();
+  return (
+    (m.includes("weight_g") || m.includes("loai")) &&
+    (m.includes("column") || m.includes("schema cache") || m.includes("find"))
+  );
 }
 /* eslint-enable @typescript-eslint/no-explicit-any */
 
@@ -119,11 +138,18 @@ export async function getFeaturedProducts(): Promise<Product[]> {
 
 export async function createProduct(input: ProductInput): Promise<Product> {
   const sb = getSupabaseAdmin();
-  const { data, error } = await sb
+  let { data, error } = await sb
     .from(TABLE)
     .insert(inputToRow(input))
     .select("*")
     .single();
+  if (error && isMissingExtraColumn(error.message)) {
+    ({ data, error } = await sb
+      .from(TABLE)
+      .insert(inputToRow(input, false))
+      .select("*")
+      .single());
+  }
   if (error) throw new Error(error.message);
   return rowToProduct(data);
 }
@@ -133,12 +159,20 @@ export async function updateProduct(
   input: ProductInput,
 ): Promise<Product> {
   const sb = getSupabaseAdmin();
-  const { data, error } = await sb
+  let { data, error } = await sb
     .from(TABLE)
     .update(inputToRow(input))
     .eq("id", id)
     .select("*")
     .single();
+  if (error && isMissingExtraColumn(error.message)) {
+    ({ data, error } = await sb
+      .from(TABLE)
+      .update(inputToRow(input, false))
+      .eq("id", id)
+      .select("*")
+      .single());
+  }
   if (error) throw new Error(error.message);
   return rowToProduct(data);
 }

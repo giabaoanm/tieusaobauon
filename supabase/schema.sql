@@ -10,8 +10,10 @@ create table if not exists public.products (
   type        text not null,          -- sao_truc | tieu_truc | khac
   tone        text not null,          -- C D E F G A B
   tone_label  text,                   -- nhãn hiển thị, vd "Đô (C5)"
-  length_cm   numeric default 0,
-  diameter_mm numeric default 0,
+  length_cm   numeric default 0,      -- kích thước: chiều dài (cm)
+  diameter_mm numeric default 0,      -- đường kính miệng thổi (mm)
+  weight_g    numeric default 0,      -- trọng lượng (gam)
+  loai        text,                   -- loại (tự nhập: trúc tím, bát khổng...)
   price       numeric not null default 0,
   sold        boolean not null default false,  -- mỗi cây độc bản: đã bán?
   image_main  text,
@@ -24,6 +26,10 @@ create table if not exists public.products (
 );
 
 create index if not exists products_active_idx on public.products (is_active, created_at desc);
+
+-- MIGRATION (chạy 1 lần nếu bảng products đã có sẵn, để thêm 2 cột mới):
+alter table public.products add column if not exists weight_g numeric default 0;
+alter table public.products add column if not exists loai text;
 
 -- Bật RLS và KHÔNG tạo policy công khai:
 -- Website chỉ truy cập qua server (service role key) nên dữ liệu

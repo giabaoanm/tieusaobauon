@@ -31,7 +31,9 @@ export interface Product {
   tone: Tone;
   toneLabel: string; // Hiển thị: "Đô (C5)"
   lengthCm: number; // Chiều dài (kích thước)
-  diameterMm: number; // Đường kính
+  diameterMm: number; // Đường kính miệng thổi
+  weightGrams?: number; // Trọng lượng (gam)
+  loai?: string; // Loại (ô tự nhập: vd trúc tím, bát khổng...)
   price: number; // Giá (VND)
   sold: boolean; // Độc bản: đã bán hay còn hàng
   imageMain: string; // Ảnh 1 (ảnh chính)
