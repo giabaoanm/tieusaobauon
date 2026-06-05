@@ -133,7 +133,7 @@ export default async function ProductDetailPage({
             {!!product.loai && <Spec label="🏷️ Loại" value={product.loai} />}
             <Spec
               label="📦 Tình trạng"
-              value={product.sold ? "Đã bán" : "Còn hàng — độc bản (1 cây)"}
+              value={product.sold ? "Đã bán" : "Còn hàng"}
             />
           </dl>
 
