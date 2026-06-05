@@ -9,29 +9,34 @@ export default function AboutPage() {
 
       <div className="mt-6 space-y-4 leading-relaxed text-bamboo-700">
         <p>
-          Những ngày đầu, Bá Uôn cũng là người thích động tiêu và đi mua về để
-          trải nghiệm, rồi nhận ra rất nhiều cây tiêu rất khó thổi, khó điều
-          khiển, âm thanh phô — mặc dù giá không hề rẻ.
+          Vào một ngày đầu năm 2021, trong lúc lang thang trên Internet, tôi vô
+          tình nghe được tiếng độc tấu của một loại nhạc cụ mộc mạc mà trầm ấm
+          đến lạ. Đó không đơn thuần là âm thanh, mà như một vòng tay vỗ về, ấm
+          áp và yêu thương, len lỏi vào tận sâu thẳm tâm hồn. Tìm hiểu thêm, tôi
+          mới biết đó là tiếng của cây động tiêu.
         </p>
         <p>
-          Không thỏa mãn với những sản phẩm mua từ thị trường, anh một mình mày
-          mò, đêm ngày nghiên cứu cách chế tạo động tiêu: thử nghiệm các loại
-          trúc, cách xử lý thân trúc để chống mối mọt, nứt vỡ do thời tiết, và
-          làm sao để người dùng thổi không chỉ chuẩn âm, đủ quãng mà còn cho ra
-          những màu âm hay, chất chứa cảm xúc.
+          Mong có được những phút giây thư giãn sau công việc, tôi lùng mua vài
+          cây động tiêu trên thị trường — từ loại bình thường đến loại cao cấp —
+          nhưng không cây nào chạm tới được thứ âm thanh đã khiến lòng tôi rung
+          động ngày ấy. Vậy là tôi bắt đầu lặng lẽ mày mò, đêm ngày nghiên cứu
+          cách chế tác: thử qua đủ loại trúc, tìm cách xử lý thân trúc để chống
+          mối mọt và nứt vỡ theo thời tiết, rồi trăn trở làm sao để người thổi
+          không chỉ chuẩn âm, đủ quãng, mà tiếng tiêu còn ngân lên đầy màu sắc và
+          cảm xúc.
         </p>
         <p>
-          Sau hơn 3 năm miệt mài, thành quả mang lại cho Bá Uôn không hề nhỏ —
-          hàng loạt cây động tiêu, sáo trúc cực kỳ hay đã ra đời, tủ kệ sản phẩm
-          mỗi ngày một nhiều thêm. Nhưng trong lòng thực sự không muốn bán những
-          cây tiêu, cây sáo quý giá đã bao ngày đêm nắn nót từng mũi dao để làm
-          ra; có lúc không thổi mà chỉ mang ra ngắm nhìn cũng thấy vui.
+          Sau hơn ba năm miệt mài, thành quả mang lại không hề nhỏ. Hàng loạt cây
+          động tiêu, sáo trúc với âm thanh thực sự hay đã lần lượt ra đời. Tôi
+          yêu quý từng cây tiêu, cây sáo mình đã bao ngày đêm uốn nắn, phơi khô
+          rồi gọt giũa nên hình — có lúc chẳng thổi, chỉ mang ra ngắm thôi cũng
+          đủ thấy vui trong lòng.
         </p>
         <p>
-          Rồi một ngày, Bá Uôn nghĩ: những sản phẩm tuyệt vời nếu chỉ giữ riêng
-          mình thì thật ích kỷ. Vì vậy anh quyết định chia sẻ niềm đam mê với mọi
-          người, để những sản phẩm thực sự chất lượng đến với những ai có duyên
-          gặp được <em>(số lượng chỉ có hạn)</em>.
+          Để chia sẻ niềm đam mê này cùng những sản phẩm tâm huyết nhất đến với
+          mọi người, tôi lập nên trang này, với mong mỏi được góp một phần nhỏ
+          vào việc cùng mọi người tạo nên những giai điệu đẹp, nâng niu và làm
+          giàu thêm cho cuộc sống.
         </p>
 
         <h2 className="pt-2 font-serif text-xl font-bold text-bamboo-800">
