@@ -14,6 +14,7 @@ const ORDER_STATUSES: OrderStatus[] = [
   "shipping",
   "done",
   "canceled",
+  "canceled_customer",
 ];
 const PAYMENT_STATUSES: PaymentStatus[] = ["pending", "paid"];
 

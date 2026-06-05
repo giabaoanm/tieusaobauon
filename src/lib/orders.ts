@@ -10,7 +10,13 @@ import { getSupabaseAdmin, isSupabaseConfigured } from "@/lib/supabase";
 // ──────────────────────────────────────────────────────────────
 
 export type PaymentMethod = "cod" | "vietqr" | "vnpay";
-export type OrderStatus = "new" | "confirmed" | "shipping" | "done" | "canceled";
+export type OrderStatus =
+  | "new" // Chờ xử lý (khách vừa đặt)
+  | "confirmed" // (cũ) — coi như đang vận chuyển
+  | "shipping" // Đang vận chuyển (admin đã xác nhận)
+  | "done" // Kết thúc (admin hoàn thành)
+  | "canceled" // Admin huỷ
+  | "canceled_customer"; // Khách huỷ
 export type PaymentStatus = "pending" | "paid";
 
 export interface OrderItem {

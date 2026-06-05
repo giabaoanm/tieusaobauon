@@ -45,9 +45,9 @@ export interface Product {
 
 // Nhãn hiển thị tiếng Việt cho từng loại sản phẩm
 export const PRODUCT_TYPE_LABELS: Record<ProductType, string> = {
-  tieu_truc: "Động tiêu trúc",
-  sao_truc: "Sáo trúc",
-  khac: "Sản phẩm khác",
+  tieu_truc: "Động tiêu bát khổng",
+  sao_truc: "Sáo trúc 6 lỗ",
+  khac: "Nhạc cụ khác",
 };
 
 // Nhãn hiển thị cho tone (kèm tên Việt)

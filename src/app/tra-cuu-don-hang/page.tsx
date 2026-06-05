@@ -19,11 +19,12 @@ interface OrderView {
 }
 
 const STATUS_LABELS: Record<string, string> = {
-  new: "Mới đặt",
-  confirmed: "Đã xác nhận",
-  shipping: "Đang giao",
-  done: "Hoàn tất",
-  canceled: "Đã hủy",
+  new: "Chờ xử lý",
+  confirmed: "Đang vận chuyển",
+  shipping: "Đang vận chuyển",
+  done: "Kết thúc",
+  canceled: "Đã huỷ",
+  canceled_customer: "Bạn đã huỷ",
 };
 
 const PAYMENT_LABELS: Record<string, string> = {
@@ -220,8 +221,8 @@ function LookupContent() {
                 {canceling ? "Đang hủy..." : "Hủy đơn hàng"}
               </button>
               <p className="mt-2 text-xs text-bamboo-500">
-                Bạn có thể tự hủy khi đơn còn ở trạng thái “Mới đặt”. Sau khi shop
-                xác nhận, vui lòng liên hệ shop để hủy.
+                Bạn có thể tự hủy khi đơn còn ở trạng thái “Chờ xử lý”. Sau khi
+                shop xác nhận, vui lòng liên hệ shop để hủy.
               </p>
             </div>
           )}

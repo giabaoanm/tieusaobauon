@@ -311,17 +311,13 @@ export default function AdminProductManager({
               />
             </Field>
 
-            <Field label="Loại">
-              <select
+            <Field label="Loại (nhập tự do)">
+              <input
                 className="inp"
                 value={form.loai}
                 onChange={(e) => set("loai", e.target.value)}
-              >
-                <option value="">— Chọn loại —</option>
-                <option value="Động tiêu bát khổng">Động tiêu bát khổng</option>
-                <option value="Sáo trúc 6 lỗ">Sáo trúc 6 lỗ</option>
-                <option value="Loại khác">Loại khác</option>
-              </select>
+                placeholder="vd: Trúc tím Cao Bằng / Nứa / Trúc đốt dài..."
+              />
             </Field>
 
             <Field label="Trạng thái">

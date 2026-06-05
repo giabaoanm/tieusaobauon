@@ -46,7 +46,10 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  if (order.orderStatus === "canceled") {
+  if (
+    order.orderStatus === "canceled" ||
+    order.orderStatus === "canceled_customer"
+  ) {
     return NextResponse.json(
       { error: "Đơn này đã được hủy trước đó." },
       { status: 400 },
@@ -64,7 +67,7 @@ export async function POST(req: NextRequest) {
   }
 
   const updated = await updateOrder(order.orderCode, {
-    orderStatus: "canceled",
+    orderStatus: "canceled_customer",
   });
   return NextResponse.json({ order: updated });
 }
