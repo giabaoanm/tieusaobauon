@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { requireAdmin } from "@/lib/admin-auth";
-import { getAllProducts } from "@/lib/products-db";
+import { getAllProducts, getArchivedProducts } from "@/lib/products-db";
 import { isSupabaseConfigured } from "@/lib/supabase";
 import AdminProductManager from "@/components/admin/AdminProductManager";
 
@@ -10,6 +10,7 @@ export const metadata = { title: "Quản lý sản phẩm" };
 export default async function AdminProductsPage() {
   await requireAdmin();
   const products = await getAllProducts();
+  const archived = await getArchivedProducts();
   const configured = isSupabaseConfigured();
 
   return (
@@ -42,6 +43,7 @@ export default async function AdminProductsPage() {
 
       <AdminProductManager
         initialProducts={products}
+        archivedProducts={archived}
         enabled={configured}
       />
     </div>

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { requireAdmin } from "@/lib/admin-auth";
 import { listOrders } from "@/lib/orders";
-import { getAllProducts } from "@/lib/products-db";
+import { getAllProducts, getArchivedProducts } from "@/lib/products-db";
 import { PRODUCT_TYPE_LABELS, formatPrice } from "@/lib/types";
 import AdminOrderTable, {
   type OrderItemInfo,
@@ -14,7 +14,12 @@ export const metadata = { title: "Quản trị đơn hàng" };
 export default async function AdminPage() {
   await requireAdmin();
   const orders = await listOrders();
-  const products = await getAllProducts();
+  // Gồm cả cây đang bán và cây đã lưu trữ (đơn hoàn thành) để chi tiết đơn
+  // luôn tra được Tên / Thông số / Loại phục vụ bảo hành.
+  const products = [
+    ...(await getAllProducts()),
+    ...(await getArchivedProducts()),
+  ];
 
   // Bản đồ thông số sản phẩm (để hiện Tên / Thông số / Loại trong chi tiết đơn)
   const productInfo: Record<string, OrderItemInfo> = {};

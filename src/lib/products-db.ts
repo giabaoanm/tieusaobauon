@@ -115,8 +115,31 @@ export async function getProductBySlug(
     return sampleProducts.find((p) => p.slug === slug);
   }
   const sb = getSupabaseAdmin();
-  const { data } = await sb.from(TABLE).select("*").eq("slug", slug).single();
+  // Chỉ trả cây đang hiển thị (is_active) cho trang công khai.
+  // Cây đã hoàn tất đơn (lưu trữ bảo hành) sẽ không xem được ngoài web.
+  const { data } = await sb
+    .from(TABLE)
+    .select("*")
+    .eq("slug", slug)
+    .eq("is_active", true)
+    .maybeSingle();
   return data ? rowToProduct(data) : undefined;
+}
+
+// Cây đã lưu trữ (is_active=false) — phục vụ tra cứu bảo hành trong admin
+export async function getArchivedProducts(): Promise<Product[]> {
+  if (!isSupabaseConfigured()) return [];
+  const sb = getSupabaseAdmin();
+  const { data, error } = await sb
+    .from(TABLE)
+    .select("*")
+    .eq("is_active", false)
+    .order("created_at", { ascending: false });
+  if (error) {
+    console.error("Supabase getArchivedProducts:", error.message);
+    return [];
+  }
+  return (data ?? []).map(rowToProduct);
 }
 
 export async function getProductById(id: string): Promise<Product | undefined> {
@@ -192,6 +215,16 @@ export async function countProducts(): Promise<number> {
     .select("id", { count: "exact", head: true })
     .eq("is_active", true);
   return count ?? 0;
+}
+
+// Ẩn/hiện cây trên web công khai (is_active). Hoàn tất đơn → ẩn (lưu trữ).
+export async function setProductActive(
+  id: string,
+  active: boolean,
+): Promise<void> {
+  if (!isSupabaseConfigured()) return;
+  const sb = getSupabaseAdmin();
+  await sb.from(TABLE).update({ is_active: active }).eq("id", id);
 }
 
 // Đánh dấu đã bán / còn hàng (khi đặt hàng hoặc admin chỉnh)

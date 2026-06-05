@@ -72,12 +72,15 @@ function toForm(p: Product): FormState {
 
 export default function AdminProductManager({
   initialProducts,
+  archivedProducts = [],
   enabled,
 }: {
   initialProducts: Product[];
+  archivedProducts?: Product[];
   enabled: boolean;
 }) {
   const [list, setList] = useState<Product[]>(initialProducts);
+  const [archived, setArchived] = useState<Product[]>(archivedProducts);
   const [form, setForm] = useState<FormState | null>(null);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
@@ -179,6 +182,41 @@ export default function AdminProductManager({
       body: JSON.stringify({ id: p.id }),
     });
     if (res.ok) setList((prev) => prev.filter((x) => x.id !== p.id));
+    else {
+      const d = await res.json();
+      alert(d.error || "Xóa thất bại.");
+    }
+  }
+
+  // Khôi phục cây lưu trữ về hiển thị lại trên web
+  async function restore(p: Product) {
+    if (list.length >= MAX_PRODUCTS) {
+      alert(
+        `Đã đủ ${MAX_PRODUCTS} ô đang hiển thị. Hãy ẩn/xóa bớt trước khi khôi phục.`,
+      );
+      return;
+    }
+    const res = await fetch("/api/admin/products", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id: p.id, setActive: true }),
+    });
+    const data = await res.json();
+    if (res.ok) {
+      setArchived((prev) => prev.filter((x) => x.id !== p.id));
+      setList((prev) => [data.product, ...prev]);
+    } else alert(data.error || "Khôi phục thất bại.");
+  }
+
+  // Xóa vĩnh viễn cây khỏi lưu trữ (mất dữ liệu bảo hành)
+  async function removeArchived(p: Product) {
+    if (!confirm(`Xóa vĩnh viễn "${p.name}" khỏi lưu trữ bảo hành?`)) return;
+    const res = await fetch("/api/admin/products", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id: p.id }),
+    });
+    if (res.ok) setArchived((prev) => prev.filter((x) => x.id !== p.id));
     else {
       const d = await res.json();
       alert(d.error || "Xóa thất bại.");
@@ -462,6 +500,79 @@ export default function AdminProductManager({
           </div>
         ))}
       </div>
+
+      {/* Khu lưu trữ bảo hành — cây đã hoàn tất đơn (ẩn khỏi web) */}
+      {archived.length > 0 && (
+        <div className="mt-12 border-t border-bamboo-200 pt-8">
+          <h2 className="font-serif text-2xl font-bold text-bamboo-800">
+            Lưu trữ bảo hành
+          </h2>
+          <p className="mb-4 mt-1 text-sm text-bamboo-600">
+            Các cây đã hoàn tất đơn (đã ẩn khỏi web), giữ lại để tra cứu bảo
+            hành — <strong>{archived.length}</strong> cây.
+          </p>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {archived.map((p) => (
+              <div
+                key={p.id}
+                className="overflow-hidden rounded-2xl border border-bamboo-200 bg-bamboo-50"
+              >
+                <div className="relative aspect-video bg-bamboo-100">
+                  {p.imageMain && (
+                    <Image
+                      src={p.imageMain}
+                      alt={p.name}
+                      fill
+                      sizes="33vw"
+                      className="object-cover opacity-80"
+                    />
+                  )}
+                  <span className="absolute right-2 top-2 rounded-full bg-bamboo-700 px-2.5 py-1 text-xs font-bold text-white">
+                    ĐÃ LƯU TRỮ
+                  </span>
+                </div>
+                <div className="p-4">
+                  <div className="font-medium text-bamboo-900">{p.name}</div>
+                  <div className="mt-1 space-y-0.5 text-xs text-bamboo-600">
+                    <div>
+                      🎵 {p.toneLabel} · 🎋 {PRODUCT_TYPE_LABELS[p.type]}
+                    </div>
+                    <div>
+                      {p.lengthCm > 0 && <>📏 Dài {p.lengthCm}cm </>}
+                      {p.diameterMm > 0 && <>· Ø {p.diameterMm}mm </>}
+                      {!!p.weightGrams && p.weightGrams > 0 && (
+                        <>· {p.weightGrams}g</>
+                      )}
+                    </div>
+                    {p.loai && <div>🏷️ Loại: {p.loai}</div>}
+                  </div>
+                  <div className="mt-1 font-bold text-clay-700">
+                    {formatPrice(p.price)}
+                  </div>
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    <button
+                      type="button"
+                      onClick={() => restore(p)}
+                      disabled={!enabled}
+                      className="rounded-full bg-bamboo-100 px-4 py-1.5 text-sm font-medium text-bamboo-700 hover:bg-bamboo-200 disabled:opacity-50"
+                    >
+                      Khôi phục (hiện lại)
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => removeArchived(p)}
+                      disabled={!enabled}
+                      className="rounded-full bg-clay-100 px-4 py-1.5 text-sm font-medium text-clay-700 hover:bg-clay-200 disabled:opacity-50"
+                    >
+                      Xóa
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       <style jsx>{`
         :global(.inp) {

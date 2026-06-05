@@ -7,6 +7,8 @@ import {
   updateProduct,
   deleteProduct,
   countProducts,
+  setProductActive,
+  getProductById,
 } from "@/lib/products-db";
 import {
   PRODUCT_TYPE_LABELS,
@@ -133,6 +135,16 @@ export async function PATCH(req: NextRequest) {
   const body = (await req.json().catch(() => ({}))) as Record<string, unknown>;
   const id = str(body.id, 100);
   if (!id) return NextResponse.json({ error: "Thiếu id." }, { status: 400 });
+
+  // Thao tác nhanh: ẩn/hiện cây (khôi phục cây lưu trữ) — không cần nhập lại
+  if (typeof body.setActive === "boolean") {
+    await setProductActive(id, body.setActive);
+    const product = await getProductById(id);
+    if (!product) {
+      return NextResponse.json({ error: "Không tìm thấy cây." }, { status: 404 });
+    }
+    return NextResponse.json({ product });
+  }
 
   const input = parseInput(body);
   if (typeof input === "string")

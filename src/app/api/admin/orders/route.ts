@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { isLoggedIn } from "@/lib/admin-auth";
 import { updateOrder, OrderStatus, PaymentStatus } from "@/lib/orders";
-import { setProductSold } from "@/lib/products-db";
+import { setProductSold, setProductActive } from "@/lib/products-db";
 
 // Trạng thái đơn coi là "đã xác nhận bán" → đánh dấu cây Đã bán
 const SOLD_STATUSES: OrderStatus[] = ["confirmed", "shipping", "done"];
@@ -69,6 +69,17 @@ export async function PATCH(req: NextRequest) {
     const makeSold = SOLD_STATUSES.includes(patch.orderStatus);
     for (const it of updated.items) {
       await setProductSold(it.productId, makeSold);
+      // Hoàn thành đơn → ẩn cây khỏi web (lưu trữ bảo hành).
+      // Huỷ / quay lại → hiện lại cây trên web.
+      if (patch.orderStatus === "done") {
+        await setProductActive(it.productId, false);
+      } else if (
+        patch.orderStatus === "canceled" ||
+        patch.orderStatus === "canceled_customer" ||
+        patch.orderStatus === "new"
+      ) {
+        await setProductActive(it.productId, true);
+      }
     }
   }
 
