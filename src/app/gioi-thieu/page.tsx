@@ -42,37 +42,24 @@ export default function AboutPage() {
         <h2 className="pt-2 font-serif text-xl font-bold text-bamboo-800">
           Cam kết về chất lượng
         </h2>
-        <div className="grid gap-6 sm:grid-cols-[1fr_auto] sm:items-center">
-          <ul className="list-disc space-y-2 pl-5">
-            <li>
-              Mỗi cây tiêu được <strong>chuẩn âm thanh, khớp beat, dễ thổi, đủ
-              quãng</strong>
-            </li>
-            <li>
-              Chế tác <strong>tỉ mỉ, chuẩn kích thước Lỗ Ban</strong>, cân bằng
-              khi dựng trên mặt phẳng
-            </li>
-            <li>
-              Mỗi cây tiêu, sáo được <strong>thổi thử</strong> để nghe âm thanh
-              thật trước khi chọn mua
-            </li>
-            <li>
-              <strong>Đổi trả trong vòng 15 ngày</strong> nếu phát hiện sản phẩm
-              lỗi do người bán
-            </li>
-          </ul>
-          <figure className="m-0 shrink-0">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/gioi-thieu/sao-hoan-thien.jpg"
-              alt="Cây sáo trúc hoàn thiện"
-              className="mx-auto max-h-[440px] w-auto rounded-2xl border border-bamboo-200 bg-white"
-            />
-            <figcaption className="mt-2 text-center text-xs text-bamboo-500">
-              Một cây sáo trúc hoàn thiện
-            </figcaption>
-          </figure>
-        </div>
+        <ul className="list-disc space-y-2 pl-5">
+          <li>
+            Mỗi cây tiêu được <strong>chuẩn âm thanh, khớp beat, dễ thổi, đủ
+            quãng</strong>
+          </li>
+          <li>
+            Chế tác <strong>tỉ mỉ, chuẩn kích thước Lỗ Ban</strong>, cân bằng khi
+            dựng trên mặt phẳng
+          </li>
+          <li>
+            Mỗi cây Tiêu, Sáo được <strong>chụp từ hình ảnh thật</strong> và có{" "}
+            <strong>video thổi kiểm tra</strong>
+          </li>
+          <li>
+            <strong>Đổi trả trong vòng 15 ngày</strong> nếu phát hiện sản phẩm
+            lỗi do người bán
+          </li>
+        </ul>
 
         <p>
           Chúng tôi tin rằng mua một cây động tiêu, cây sáo không nên chỉ nhìn
