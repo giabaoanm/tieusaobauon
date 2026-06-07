@@ -12,6 +12,23 @@ import {
   MAX_PRODUCTS,
 } from "@/lib/types";
 
+// Cho phép nhập số lẻ (vd "81,5" hoặc "81.5") — giữ tối đa 1 dấu thập phân
+function sanitizeDec(s: string): string {
+  let v = s.replace(/[^0-9.,]/g, "");
+  const i = v.search(/[.,]/);
+  if (i !== -1) v = v.slice(0, i + 1) + v.slice(i + 1).replace(/[.,]/g, "");
+  return v;
+}
+// Chuỗi nhập → số (chấp nhận dấu phẩy)
+function parseDec(s: string): number {
+  const n = Number((s || "").replace(",", "."));
+  return Number.isFinite(n) && n >= 0 ? n : 0;
+}
+// Số → chuỗi hiển thị trong ô (dùng dấu phẩy kiểu Việt); 0 → rỗng
+function decToInput(n: number | undefined): string {
+  return n ? String(n).replace(".", ",") : "";
+}
+
 type FormState = {
   id?: string;
   name: string;
@@ -56,9 +73,9 @@ function toForm(p: Product): FormState {
     type: p.type,
     tone: p.tone,
     toneLabel: p.toneLabel,
-    lengthCm: String(p.lengthCm),
-    diameterMm: String(p.diameterMm),
-    weightGrams: p.weightGrams ? String(p.weightGrams) : "",
+    lengthCm: decToInput(p.lengthCm),
+    diameterMm: decToInput(p.diameterMm),
+    weightGrams: decToInput(p.weightGrams),
     loai: p.loai ?? "",
     price: String(p.price),
     sold: !!p.sold,
@@ -122,9 +139,9 @@ export default function AdminProductManager({
       type: form.type,
       tone: form.tone,
       toneLabel: form.toneLabel,
-      lengthCm: Number(form.lengthCm) || 0,
-      diameterMm: Number(form.diameterMm) || 0,
-      weightGrams: Number(form.weightGrams) || 0,
+      lengthCm: parseDec(form.lengthCm),
+      diameterMm: parseDec(form.diameterMm),
+      weightGrams: parseDec(form.weightGrams),
       loai: form.loai,
       price: Number(form.price) || 0,
       sold: form.sold,
@@ -331,36 +348,30 @@ export default function AdminProductManager({
             <Field label="Kích thước — chiều dài (cm)">
               <input
                 className="inp"
-                inputMode="numeric"
+                inputMode="decimal"
                 value={form.lengthCm}
-                onChange={(e) =>
-                  set("lengthCm", e.target.value.replace(/\D/g, ""))
-                }
-                placeholder="62"
+                onChange={(e) => set("lengthCm", sanitizeDec(e.target.value))}
+                placeholder="vd: 81,5"
               />
             </Field>
 
             <Field label="Đường kính miệng thổi (mm)">
               <input
                 className="inp"
-                inputMode="numeric"
+                inputMode="decimal"
                 value={form.diameterMm}
-                onChange={(e) =>
-                  set("diameterMm", e.target.value.replace(/\D/g, ""))
-                }
-                placeholder="22"
+                onChange={(e) => set("diameterMm", sanitizeDec(e.target.value))}
+                placeholder="vd: 22,5"
               />
             </Field>
 
             <Field label="Trọng lượng (gam)">
               <input
                 className="inp"
-                inputMode="numeric"
+                inputMode="decimal"
                 value={form.weightGrams}
-                onChange={(e) =>
-                  set("weightGrams", e.target.value.replace(/\D/g, ""))
-                }
-                placeholder="120"
+                onChange={(e) => set("weightGrams", sanitizeDec(e.target.value))}
+                placeholder="vd: 120"
               />
             </Field>
 
@@ -562,10 +573,12 @@ export default function AdminProductManager({
                       🎵 {p.toneLabel} · 🎋 {PRODUCT_TYPE_LABELS[p.type]}
                     </div>
                     <div>
-                      {p.lengthCm > 0 && <>📏 Dài {p.lengthCm}cm </>}
-                      {p.diameterMm > 0 && <>· Ø {p.diameterMm}mm </>}
+                      {p.lengthCm > 0 && <>📏 Dài {decToInput(p.lengthCm)}cm </>}
+                      {p.diameterMm > 0 && (
+                        <>· Ø {decToInput(p.diameterMm)}mm </>
+                      )}
                       {!!p.weightGrams && p.weightGrams > 0 && (
-                        <>· {p.weightGrams}g</>
+                        <>· {decToInput(p.weightGrams)}g</>
                       )}
                     </div>
                     {p.loai && <div>🏷️ Loại: {p.loai}</div>}

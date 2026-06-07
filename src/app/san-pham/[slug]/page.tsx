@@ -109,7 +109,7 @@ export default async function ProductDetailPage({
               label="📏 Kích thước"
               value={
                 product.lengthCm > 0
-                  ? `Dài ${product.lengthCm} cm`
+                  ? `Dài ${dec(product.lengthCm)} cm`
                   : "Đang cập nhật"
               }
             />
@@ -117,7 +117,7 @@ export default async function ProductDetailPage({
               label="⭕ Đường kính miệng thổi"
               value={
                 product.diameterMm > 0
-                  ? `Ø ${product.diameterMm} mm`
+                  ? `Ø ${dec(product.diameterMm)} mm`
                   : "Đang cập nhật"
               }
             />
@@ -125,7 +125,7 @@ export default async function ProductDetailPage({
               label="⚖️ Trọng lượng"
               value={
                 product.weightGrams && product.weightGrams > 0
-                  ? `${product.weightGrams} g`
+                  ? `${dec(product.weightGrams)} g`
                   : "Đang cập nhật"
               }
             />
@@ -201,6 +201,11 @@ export default async function ProductDetailPage({
       )}
     </div>
   );
+}
+
+// Hiển thị số kiểu Việt: dùng dấu phẩy cho phần thập phân (81.5 → "81,5")
+function dec(n: number): string {
+  return String(n).replace(".", ",");
 }
 
 function Spec({ label, value }: { label: string; value: string }) {

@@ -228,14 +228,16 @@ export default function AdminOrderTable({
                               const info = productInfo[it.productId];
                               const specs: string[] = [];
                               if (info) {
+                                const dec = (n: number) =>
+                                  String(n).replace(".", ",");
                                 if (info.toneLabel)
                                   specs.push(`Tone ${info.toneLabel}`);
                                 if (info.lengthCm > 0)
-                                  specs.push(`Dài ${info.lengthCm}cm`);
+                                  specs.push(`Dài ${dec(info.lengthCm)}cm`);
                                 if (info.diameterMm > 0)
-                                  specs.push(`Ø ${info.diameterMm}mm`);
+                                  specs.push(`Ø ${dec(info.diameterMm)}mm`);
                                 if (info.weightGrams > 0)
-                                  specs.push(`${info.weightGrams}g`);
+                                  specs.push(`${dec(info.weightGrams)}g`);
                               }
                               return (
                                 <li
