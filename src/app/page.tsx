@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import HeroBanner from "@/components/HeroBanner";
 import ProductCard from "@/components/ProductCard";
@@ -8,9 +9,9 @@ import { PRODUCT_TYPE_LABELS, ProductType } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
 
-const categories: { type: ProductType; emoji: string }[] = [
-  { type: "tieu_truc", emoji: "🪈" },
-  { type: "sao_truc", emoji: "🎋" },
+const categories: { type: ProductType; emoji: string; image?: string }[] = [
+  { type: "tieu_truc", emoji: "🪈", image: "/danh-muc/dong-tieu.jpg" },
+  { type: "sao_truc", emoji: "🎋", image: "/danh-muc/sao-truc.jpg" },
   { type: "khac", emoji: "🎐" },
 ];
 
@@ -48,10 +49,24 @@ export default async function HomePage() {
             <Link
               key={c.type}
               href={`/san-pham?type=${c.type}`}
-              className="flex flex-col items-center gap-2 rounded-2xl border border-bamboo-200 bg-white p-6 text-center transition hover:border-bamboo-400 hover:shadow-md"
+              className="group overflow-hidden rounded-2xl border border-bamboo-200 bg-white text-center transition hover:border-bamboo-400 hover:shadow-md"
             >
-              <span className="text-4xl">{c.emoji}</span>
-              <span className="font-medium text-bamboo-800">
+              <div className="relative aspect-[4/3] w-full overflow-hidden bg-bamboo-100">
+                {c.image ? (
+                  <Image
+                    src={c.image}
+                    alt={PRODUCT_TYPE_LABELS[c.type]}
+                    fill
+                    sizes="(max-width: 768px) 50vw, 33vw"
+                    className="object-cover transition duration-500 group-hover:scale-105"
+                  />
+                ) : (
+                  <div className="flex h-full items-center justify-center text-5xl">
+                    {c.emoji}
+                  </div>
+                )}
+              </div>
+              <span className="block p-4 font-medium text-bamboo-800">
                 {PRODUCT_TYPE_LABELS[c.type]}
               </span>
             </Link>
