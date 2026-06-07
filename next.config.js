@@ -14,7 +14,7 @@ const csp = [
   `style-src 'self' 'unsafe-inline'`,
   `font-src 'self' data:`,
   `frame-src https://www.youtube.com https://www.youtube-nocookie.com https://*.vnpayment.vn`,
-  `connect-src 'self' https://www.google-analytics.com https://*.google-analytics.com https://www.googletagmanager.com`,
+  `connect-src 'self' https://*.supabase.co https://www.google-analytics.com https://*.google-analytics.com https://www.googletagmanager.com`,
   `form-action 'self' https://*.vnpayment.vn`,
   `upgrade-insecure-requests`,
 ]
