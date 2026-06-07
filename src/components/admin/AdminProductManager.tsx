@@ -682,14 +682,46 @@ function ImageUploader({
     const file = e.target.files?.[0];
     if (!file) return;
     setErr("");
+
+    const MAX = 10 * 1024 * 1024; // 10MB
+    const ALLOWED = ["image/jpeg", "image/png", "image/webp", "image/avif"];
+    if (!ALLOWED.includes(file.type)) {
+      setErr("Chỉ chấp nhận ảnh JPG, PNG, WEBP, AVIF.");
+      return;
+    }
+    if (file.size > MAX) {
+      setErr(
+        `Ảnh quá lớn (${(file.size / 1024 / 1024).toFixed(1)}MB). Tối đa 10MB.`,
+      );
+      return;
+    }
+
     setUploading(true);
     try {
-      const fd = new FormData();
-      fd.append("file", file);
-      const res = await fetch("/api/admin/upload", { method: "POST", body: fd });
-      const data = await res.json();
-      if (!res.ok) setErr(data.error || "Tải ảnh thất bại.");
-      else onChange(data.url);
+      // 1) Xin link ký sẵn từ server
+      const r1 = await fetch("/api/admin/upload-url", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ contentType: file.type }),
+      });
+      const d1 = await r1.json();
+      if (!r1.ok) {
+        setErr(d1.error || "Không tạo được link tải lên.");
+        setUploading(false);
+        return;
+      }
+      // 2) Tải file THẲNG lên Supabase (không qua Vercel → cho phép tới 10MB)
+      const r2 = await fetch(d1.uploadUrl, {
+        method: "PUT",
+        headers: { "content-type": file.type, "x-upsert": "false" },
+        body: file,
+      });
+      if (!r2.ok) {
+        setErr("Tải ảnh lên thất bại. Vui lòng thử lại.");
+        setUploading(false);
+        return;
+      }
+      onChange(d1.publicUrl);
     } catch {
       setErr("Không tải được ảnh.");
     }
@@ -719,6 +751,9 @@ function ImageUploader({
             onChange={handleFile}
             className="block text-sm text-bamboo-700 file:mr-3 file:rounded-full file:border-0 file:bg-bamboo-100 file:px-4 file:py-2 file:text-sm file:font-medium file:text-bamboo-700 hover:file:bg-bamboo-200"
           />
+          <p className="mt-1 text-xs text-bamboo-400">
+            JPG / PNG / WEBP — tối đa 10MB
+          </p>
           {uploading && (
             <p className="mt-1 text-xs text-bamboo-500">Đang tải ảnh...</p>
           )}
