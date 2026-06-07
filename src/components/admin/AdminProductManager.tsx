@@ -698,8 +698,22 @@ function ImageUploader({
 
     const MAX = 10 * 1024 * 1024; // 10MB
     const ALLOWED = ["image/jpeg", "image/png", "image/webp", "image/avif"];
-    if (!ALLOWED.includes(file.type)) {
-      setErr("Chỉ chấp nhận ảnh JPG, PNG, WEBP, AVIF.");
+
+    // Xác định loại ảnh: ưu tiên file.type, nếu trình duyệt báo sai/trống thì
+    // suy ra từ đuôi tên file (vd ".JPG" máy ảnh đôi khi báo type rỗng).
+    let ct = (file.type || "").toLowerCase();
+    if (ct === "image/jpg") ct = "image/jpeg";
+    if (!ALLOWED.includes(ct)) {
+      const n = file.name.toLowerCase();
+      if (/\.jpe?g$/.test(n)) ct = "image/jpeg";
+      else if (/\.png$/.test(n)) ct = "image/png";
+      else if (/\.webp$/.test(n)) ct = "image/webp";
+      else if (/\.avif$/.test(n)) ct = "image/avif";
+    }
+    if (!ALLOWED.includes(ct)) {
+      setErr(
+        `Định dạng ảnh không hỗ trợ (${file.type || file.name}). Hãy dùng JPG, PNG hoặc WEBP.`,
+      );
       return;
     }
     if (file.size > MAX) {
@@ -715,28 +729,29 @@ function ImageUploader({
       const r1 = await fetch("/api/admin/upload-url", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ contentType: file.type }),
+        body: JSON.stringify({ contentType: ct }),
       });
-      const d1 = await r1.json();
-      if (!r1.ok) {
-        setErr(d1.error || "Không tạo được link tải lên.");
+      const d1 = await r1.json().catch(() => ({}));
+      if (!r1.ok || !d1.uploadUrl) {
+        setErr(d1.error || `Không tạo được link tải lên (mã ${r1.status}).`);
         setUploading(false);
         return;
       }
       // 2) Tải file THẲNG lên Supabase (không qua Vercel → cho phép tới 10MB)
       const r2 = await fetch(d1.uploadUrl, {
         method: "PUT",
-        headers: { "content-type": file.type, "x-upsert": "false" },
+        headers: { "content-type": ct, "x-upsert": "true" },
         body: file,
       });
       if (!r2.ok) {
-        setErr("Tải ảnh lên thất bại. Vui lòng thử lại.");
+        const t = await r2.text().catch(() => "");
+        setErr(`Tải ảnh lên thất bại (mã ${r2.status}). ${t.slice(0, 120)}`);
         setUploading(false);
         return;
       }
       onChange(d1.publicUrl);
-    } catch {
-      setErr("Không tải được ảnh.");
+    } catch (err) {
+      setErr("Không tải được ảnh: " + ((err as Error).message || "lỗi mạng"));
     }
     setUploading(false);
   }
