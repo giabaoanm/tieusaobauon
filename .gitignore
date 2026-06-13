@@ -29,3 +29,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Ảnh gốc của shop (không đưa lên repo)
+/Image/
+/image/

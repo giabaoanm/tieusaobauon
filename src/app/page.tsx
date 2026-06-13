@@ -51,17 +51,17 @@ export default async function HomePage() {
               href={`/san-pham?type=${c.type}`}
               className="group overflow-hidden rounded-2xl border border-bamboo-200 bg-white text-center transition hover:border-bamboo-400 hover:shadow-md"
             >
-              <div className="relative aspect-[4/3] w-full overflow-hidden bg-bamboo-100">
+              <div className="relative aspect-[2/3] w-full overflow-hidden bg-bamboo-100">
                 {c.image ? (
                   <Image
                     src={c.image}
                     alt={PRODUCT_TYPE_LABELS[c.type]}
                     fill
                     sizes="(max-width: 768px) 50vw, 33vw"
-                    className="object-cover transition duration-500 group-hover:scale-105"
+                    className="object-cover object-center transition duration-500 group-hover:scale-105"
                   />
                 ) : (
-                  <div className="flex h-full items-center justify-center text-5xl">
+                  <div className="flex h-full items-center justify-center text-6xl">
                     {c.emoji}
                   </div>
                 )}
