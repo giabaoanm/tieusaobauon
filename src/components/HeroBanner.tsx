@@ -24,22 +24,32 @@ const SLIDES = [
   },
   {
     src: "/banner/sanpham-2.jpg",
-    alt: "Miệng động tiêu bát khổng khoét tinh xảo",
+    alt: "Hàng động tiêu, sáo trúc dựng đứng khoe lỗ bấm",
     position: "object-center",
   },
   {
     src: "/banner/sanpham-3.jpg",
-    alt: "Hàng động tiêu trúc xếp đều, đầu khoét chữ U",
+    alt: "Miệng thổi động tiêu bát khổng khoét tinh xảo",
     position: "object-center",
   },
   {
     src: "/banner/sanpham-4.jpg",
-    alt: "Cận cảnh thân và miệng thổi động tiêu trúc",
+    alt: "Dãy đầu thổi động tiêu trúc bóng đẹp",
     position: "object-center",
   },
   {
     src: "/banner/sanpham-5.jpg",
-    alt: "Đầu thổi các cây động tiêu, sáo trúc thủ công",
+    alt: "Đầu thổi các cây động tiêu xòe ra",
+    position: "object-center",
+  },
+  {
+    src: "/banner/sanpham-6.jpg",
+    alt: "Cận cảnh đầu thổi 5 cây động tiêu trúc",
+    position: "object-center",
+  },
+  {
+    src: "/banner/sanpham-7.jpg",
+    alt: "Thân động tiêu với hàng lỗ bấm đều tăm tắp",
     position: "object-center",
   },
 ];
