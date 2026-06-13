@@ -17,6 +17,31 @@ const SLIDES = [
     alt: "Tiên ông thổi động tiêu bên suối, hạc bay trong ráng chiều",
     position: "object-[72%_center]", // chủ thể bên phải
   },
+  {
+    src: "/banner/sanpham-1.jpg",
+    alt: "Cận cảnh các lỗ bấm động tiêu, sáo trúc thủ công",
+    position: "object-center",
+  },
+  {
+    src: "/banner/sanpham-2.jpg",
+    alt: "Miệng động tiêu bát khổng khoét tinh xảo",
+    position: "object-center",
+  },
+  {
+    src: "/banner/sanpham-3.jpg",
+    alt: "Hàng động tiêu trúc xếp đều, đầu khoét chữ U",
+    position: "object-center",
+  },
+  {
+    src: "/banner/sanpham-4.jpg",
+    alt: "Cận cảnh thân và miệng thổi động tiêu trúc",
+    position: "object-center",
+  },
+  {
+    src: "/banner/sanpham-5.jpg",
+    alt: "Đầu thổi các cây động tiêu, sáo trúc thủ công",
+    position: "object-center",
+  },
 ];
 
 const INTERVAL = 30000; // 30 giây
