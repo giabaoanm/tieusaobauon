@@ -44,7 +44,7 @@ const SLIDES = [
   },
 ];
 
-const INTERVAL = 30000; // 30 giây
+const INTERVAL = 10000; // 10 giây
 
 export default function HeroBanner() {
   const [index, setIndex] = useState(0);
