@@ -102,6 +102,23 @@ export default async function ProductDetailPage({
             {formatPrice(product.price)}
           </p>
 
+          {!!product.rating && product.rating > 0 && (
+            <div className="mt-3 flex items-center gap-2">
+              <span aria-hidden className="text-lg leading-none text-amber-500">
+                {"★".repeat(Math.round(product.rating / 2))}
+                <span className="text-bamboo-200">
+                  {"★".repeat(5 - Math.round(product.rating / 2))}
+                </span>
+              </span>
+              <span className="font-bold text-bamboo-900">
+                {dec(product.rating)}/10
+              </span>
+              <span className="text-sm text-bamboo-500">
+                · Đánh giá chất lượng
+              </span>
+            </div>
+          )}
+
           {/* Thông số sản phẩm */}
           <dl className="mt-6 space-y-3 rounded-2xl border border-bamboo-200 bg-white p-5">
             <Spec label="🎵 Tone" value={product.toneLabel} />

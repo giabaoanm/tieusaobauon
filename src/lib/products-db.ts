@@ -23,6 +23,7 @@ export interface ProductInput {
   weightGrams: number;
   loai: string;
   productCode: string;
+  rating: number;
   price: number;
   sold: boolean;
   imageMain: string;
@@ -47,6 +48,7 @@ function rowToProduct(r: any): Product {
     weightGrams: Number(r.weight_g) || 0,
     loai: r.loai || "",
     productCode: r.product_code || "",
+    rating: Number(r.rating) || 0,
     price: Number(r.price) || 0,
     sold: !!r.sold,
     imageMain: r.image_main || "",
@@ -81,17 +83,19 @@ function inputToRow(input: ProductInput, includeExtras = true) {
     row.weight_g = input.weightGrams || 0;
     row.loai = input.loai || null;
     row.product_code = input.productCode || null;
+    row.rating = input.rating || 0;
   }
   return row;
 }
 
-// Lỗi "cột chưa tồn tại" (DB chưa chạy migration thêm weight_g/loai/product_code)
+// Lỗi "cột chưa tồn tại" (DB chưa chạy migration thêm cột mới)
 function isMissingExtraColumn(message: string): boolean {
   const m = message.toLowerCase();
   return (
     (m.includes("weight_g") ||
       m.includes("loai") ||
-      m.includes("product_code")) &&
+      m.includes("product_code") ||
+      m.includes("rating")) &&
     (m.includes("column") || m.includes("schema cache") || m.includes("find"))
   );
 }

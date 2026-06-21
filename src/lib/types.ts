@@ -35,6 +35,7 @@ export interface Product {
   weightGrams?: number; // Trọng lượng (gam)
   loai?: string; // Loại (ô tự nhập: vd trúc tím, bát khổng...)
   productCode?: string; // Mã sản phẩm (CHỈ hiện trong quản trị, không cho khách)
+  rating?: number; // Điểm đánh giá chất lượng (trên thang 10), vd 9.5
   price: number; // Giá (VND)
   sold: boolean; // Độc bản: đã bán hay còn hàng
   imageMain: string; // Ảnh 1 (ảnh chính)

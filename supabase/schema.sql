@@ -15,6 +15,7 @@ create table if not exists public.products (
   weight_g    numeric default 0,      -- trọng lượng (gam)
   loai        text,                   -- loại (tự nhập: trúc tím, bát khổng...)
   product_code text,                  -- mã sản phẩm (chỉ hiện trong quản trị)
+  rating       numeric default 0,      -- điểm đánh giá chất lượng (trên 10)
   price       numeric not null default 0,
   sold        boolean not null default false,  -- mỗi cây độc bản: đã bán?
   image_main  text,
@@ -32,6 +33,7 @@ create index if not exists products_active_idx on public.products (is_active, cr
 alter table public.products add column if not exists weight_g numeric default 0;
 alter table public.products add column if not exists loai text;
 alter table public.products add column if not exists product_code text;
+alter table public.products add column if not exists rating numeric default 0;
 
 -- Bật RLS và KHÔNG tạo policy công khai:
 -- Website chỉ truy cập qua server (service role key) nên dữ liệu

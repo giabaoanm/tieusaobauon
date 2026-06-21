@@ -40,6 +40,7 @@ type FormState = {
   weightGrams: string;
   loai: string;
   productCode: string;
+  rating: string;
   price: string;
   sold: boolean;
   description: string;
@@ -59,6 +60,7 @@ const empty: FormState = {
   weightGrams: "",
   loai: "",
   productCode: "",
+  rating: "",
   price: "",
   sold: false,
   description: "",
@@ -80,6 +82,7 @@ function toForm(p: Product): FormState {
     weightGrams: decToInput(p.weightGrams),
     loai: p.loai ?? "",
     productCode: p.productCode ?? "",
+    rating: decToInput(p.rating),
     price: String(p.price),
     sold: !!p.sold,
     description: p.description,
@@ -162,6 +165,7 @@ export default function AdminProductManager({
       weightGrams: parseDec(form.weightGrams),
       loai: form.loai,
       productCode: form.productCode,
+      rating: parseDec(form.rating),
       price: Number(form.price) || 0,
       sold: form.sold,
       description: form.description,
@@ -211,6 +215,7 @@ export default function AdminProductManager({
         weightGrams: p.weightGrams ?? 0,
         loai: p.loai ?? "",
         productCode: p.productCode ?? "",
+        rating: p.rating ?? 0,
         price: p.price,
         sold: !p.sold,
         description: p.description,
@@ -432,6 +437,16 @@ export default function AdminProductManager({
               />
             </Field>
 
+            <Field label="Điểm đánh giá (trên 10)">
+              <input
+                className="inp"
+                inputMode="decimal"
+                value={form.rating}
+                onChange={(e) => set("rating", sanitizeDec(e.target.value))}
+                placeholder="vd: 9,5"
+              />
+            </Field>
+
             <Field label="Trạng thái">
               <select
                 className="inp"
@@ -548,6 +563,11 @@ export default function AdminProductManager({
               {p.productCode && (
                 <div className="mt-0.5 font-mono text-xs text-bamboo-500">
                   Mã: {p.productCode}
+                </div>
+              )}
+              {!!p.rating && p.rating > 0 && (
+                <div className="mt-0.5 text-xs text-amber-600">
+                  ⭐ {decToInput(p.rating)}/10
                 </div>
               )}
               <div className="mt-1 font-bold text-clay-700">
