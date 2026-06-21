@@ -31,6 +31,7 @@ export default async function AdminPage() {
       lengthCm: p.lengthCm,
       diameterMm: p.diameterMm,
       weightGrams: p.weightGrams || 0,
+      productCode: p.productCode || "",
     };
   }
 

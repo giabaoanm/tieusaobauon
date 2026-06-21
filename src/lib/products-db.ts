@@ -22,6 +22,7 @@ export interface ProductInput {
   diameterMm: number;
   weightGrams: number;
   loai: string;
+  productCode: string;
   price: number;
   sold: boolean;
   imageMain: string;
@@ -45,6 +46,7 @@ function rowToProduct(r: any): Product {
     diameterMm: Number(r.diameter_mm) || 0,
     weightGrams: Number(r.weight_g) || 0,
     loai: r.loai || "",
+    productCode: r.product_code || "",
     price: Number(r.price) || 0,
     sold: !!r.sold,
     imageMain: r.image_main || "",
@@ -73,19 +75,23 @@ function inputToRow(input: ProductInput, includeExtras = true) {
     featured: input.featured,
     is_active: true,
   };
-  // Cột mới (weight_g, loai) — nếu DB chưa thêm cột thì bỏ qua để vẫn lưu được.
+  // Cột mới (weight_g, loai, product_code) — nếu DB chưa thêm cột thì bỏ qua
+  // để vẫn lưu được phần còn lại.
   if (includeExtras) {
     row.weight_g = input.weightGrams || 0;
     row.loai = input.loai || null;
+    row.product_code = input.productCode || null;
   }
   return row;
 }
 
-// Lỗi "cột chưa tồn tại" (DB chưa chạy migration thêm weight_g/loai)
+// Lỗi "cột chưa tồn tại" (DB chưa chạy migration thêm weight_g/loai/product_code)
 function isMissingExtraColumn(message: string): boolean {
   const m = message.toLowerCase();
   return (
-    (m.includes("weight_g") || m.includes("loai")) &&
+    (m.includes("weight_g") ||
+      m.includes("loai") ||
+      m.includes("product_code")) &&
     (m.includes("column") || m.includes("schema cache") || m.includes("find"))
   );
 }

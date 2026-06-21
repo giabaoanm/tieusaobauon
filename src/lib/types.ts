@@ -34,6 +34,7 @@ export interface Product {
   diameterMm: number; // Đường kính miệng thổi
   weightGrams?: number; // Trọng lượng (gam)
   loai?: string; // Loại (ô tự nhập: vd trúc tím, bát khổng...)
+  productCode?: string; // Mã sản phẩm (CHỈ hiện trong quản trị, không cho khách)
   price: number; // Giá (VND)
   sold: boolean; // Độc bản: đã bán hay còn hàng
   imageMain: string; // Ảnh 1 (ảnh chính)

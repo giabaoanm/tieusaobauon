@@ -12,6 +12,7 @@ export type OrderItemInfo = {
   lengthCm: number;
   diameterMm: number;
   weightGrams: number;
+  productCode: string;
 };
 
 const PAYMENT_LABELS: Record<string, string> = {
@@ -254,6 +255,11 @@ export default function AdminOrderTable({
                                   </div>
                                   {info ? (
                                     <div className="mt-1 space-y-0.5 text-xs text-bamboo-600">
+                                      {info.productCode && (
+                                        <div className="font-mono text-bamboo-800">
+                                          Mã: {info.productCode}
+                                        </div>
+                                      )}
                                       <div>
                                         <span className="text-bamboo-500">
                                           Kiểu:{" "}

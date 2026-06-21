@@ -70,6 +70,7 @@ function parseInput(data: Record<string, unknown>): ProductInput | string {
     diameterMm: num(data.diameterMm),
     weightGrams: num(data.weightGrams),
     loai: str(data.loai, 100),
+    productCode: str(data.productCode, 60),
     price: num(data.price),
     sold: !!data.sold,
     imageMain,

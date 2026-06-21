@@ -39,6 +39,7 @@ type FormState = {
   diameterMm: string;
   weightGrams: string;
   loai: string;
+  productCode: string;
   price: string;
   sold: boolean;
   description: string;
@@ -57,6 +58,7 @@ const empty: FormState = {
   diameterMm: "",
   weightGrams: "",
   loai: "",
+  productCode: "",
   price: "",
   sold: false,
   description: "",
@@ -77,6 +79,7 @@ function toForm(p: Product): FormState {
     diameterMm: decToInput(p.diameterMm),
     weightGrams: decToInput(p.weightGrams),
     loai: p.loai ?? "",
+    productCode: p.productCode ?? "",
     price: String(p.price),
     sold: !!p.sold,
     description: p.description,
@@ -143,6 +146,7 @@ export default function AdminProductManager({
       diameterMm: parseDec(form.diameterMm),
       weightGrams: parseDec(form.weightGrams),
       loai: form.loai,
+      productCode: form.productCode,
       price: Number(form.price) || 0,
       sold: form.sold,
       description: form.description,
@@ -191,6 +195,7 @@ export default function AdminProductManager({
         diameterMm: p.diameterMm,
         weightGrams: p.weightGrams ?? 0,
         loai: p.loai ?? "",
+        productCode: p.productCode ?? "",
         price: p.price,
         sold: !p.sold,
         description: p.description,
@@ -384,6 +389,15 @@ export default function AdminProductManager({
               />
             </Field>
 
+            <Field label="Mã sản phẩm (chỉ hiện trong quản trị)">
+              <input
+                className="inp"
+                value={form.productCode}
+                onChange={(e) => set("productCode", e.target.value)}
+                placeholder="vd: DT-C4-001"
+              />
+            </Field>
+
             <Field label="Trạng thái">
               <select
                 className="inp"
@@ -496,6 +510,11 @@ export default function AdminProductManager({
               <div className="mt-1 text-sm text-bamboo-600">
                 🎵 {p.toneLabel} · {PRODUCT_TYPE_LABELS[p.type]}
               </div>
+              {p.productCode && (
+                <div className="mt-0.5 font-mono text-xs text-bamboo-500">
+                  Mã: {p.productCode}
+                </div>
+              )}
               <div className="mt-1 font-bold text-clay-700">
                 {formatPrice(p.price)}
               </div>
@@ -582,6 +601,9 @@ export default function AdminProductManager({
                       )}
                     </div>
                     {p.loai && <div>🏷️ Loại: {p.loai}</div>}
+                    {p.productCode && (
+                      <div className="font-mono">Mã: {p.productCode}</div>
+                    )}
                   </div>
                   <div className="mt-1 font-bold text-clay-700">
                     {formatPrice(p.price)}
