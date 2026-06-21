@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import type { Product } from "@/lib/types";
 import {
@@ -105,6 +105,7 @@ export default function AdminProductManager({
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
   const [zoomImg, setZoomImg] = useState<string | null>(null);
+  const formRef = useRef<HTMLDivElement>(null);
 
   // Đóng ảnh phóng to bằng Esc + khóa cuộn nền
   useEffect(() => {
@@ -120,13 +121,21 @@ export default function AdminProductManager({
     };
   }, [zoomImg]);
 
+  // Cuộn tới khung chỉnh sửa khi mở (đỡ phải kéo lên trên)
+  function scrollToForm() {
+    setTimeout(() => {
+      formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 60);
+  }
   function openNew() {
     setError("");
     setForm({ ...empty });
+    scrollToForm();
   }
   function openEdit(p: Product) {
     setError("");
     setForm(toForm(p));
+    scrollToForm();
   }
   function set<K extends keyof FormState>(k: K, v: FormState[K]) {
     setForm((f) => (f ? { ...f, [k]: v } : f));
@@ -288,7 +297,10 @@ export default function AdminProductManager({
 
       {/* Form thêm/sửa */}
       {form && (
-        <div className="mb-8 rounded-2xl border border-bamboo-300 bg-white p-6">
+        <div
+          ref={formRef}
+          className="mb-8 scroll-mt-24 rounded-2xl border border-bamboo-300 bg-white p-6"
+        >
           <h2 className="mb-4 font-semibold text-bamboo-800">
             {form.id ? "Sửa sản phẩm" : "Thêm sản phẩm mới"}
           </h2>
