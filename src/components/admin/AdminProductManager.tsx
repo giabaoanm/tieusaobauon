@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import type { Product } from "@/lib/types";
 import {
@@ -105,7 +105,21 @@ export default function AdminProductManager({
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
   const [zoomImg, setZoomImg] = useState<string | null>(null);
-  const formRef = useRef<HTMLDivElement>(null);
+
+  // Đóng pop-up chỉnh sửa bằng Esc + khóa cuộn nền khi mở
+  const isFormOpen = !!form;
+  useEffect(() => {
+    if (!isFormOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setForm(null);
+    };
+    document.addEventListener("keydown", onKey);
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = "";
+    };
+  }, [isFormOpen]);
 
   // Đóng ảnh phóng to bằng Esc + khóa cuộn nền
   useEffect(() => {
@@ -121,21 +135,13 @@ export default function AdminProductManager({
     };
   }, [zoomImg]);
 
-  // Cuộn tới khung chỉnh sửa khi mở (đỡ phải kéo lên trên)
-  function scrollToForm() {
-    setTimeout(() => {
-      formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 60);
-  }
   function openNew() {
     setError("");
     setForm({ ...empty });
-    scrollToForm();
   }
   function openEdit(p: Product) {
     setError("");
     setForm(toForm(p));
-    scrollToForm();
   }
   function set<K extends keyof FormState>(k: K, v: FormState[K]) {
     setForm((f) => (f ? { ...f, [k]: v } : f));
@@ -295,17 +301,33 @@ export default function AdminProductManager({
         )}
       </div>
 
-      {/* Form thêm/sửa */}
+      {/* Form thêm/sửa — pop-up nổi */}
       {form && (
         <div
-          ref={formRef}
-          className="mb-8 scroll-mt-24 rounded-2xl border border-bamboo-300 bg-white p-6"
+          className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-black/50 p-3 sm:p-6"
+          onClick={() => setForm(null)}
+          role="dialog"
+          aria-modal="true"
         >
-          <h2 className="mb-4 font-semibold text-bamboo-800">
-            {form.id ? "Sửa sản phẩm" : "Thêm sản phẩm mới"}
-          </h2>
+          <div
+            className="my-6 w-full max-w-3xl rounded-2xl border border-bamboo-300 bg-white p-6 shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="mb-4 flex items-center justify-between">
+              <h2 className="font-semibold text-bamboo-800">
+                {form.id ? "Sửa sản phẩm" : "Thêm sản phẩm mới"}
+              </h2>
+              <button
+                type="button"
+                onClick={() => setForm(null)}
+                aria-label="Đóng"
+                className="flex h-9 w-9 items-center justify-center rounded-full text-xl text-bamboo-600 transition hover:bg-bamboo-100"
+              >
+                ✕
+              </button>
+            </div>
 
-          <div className="grid gap-4 md:grid-cols-2">
+            <div className="grid gap-4 md:grid-cols-2">
             <Field label="Tên sản phẩm *" full>
               <input
                 className="inp"
@@ -485,6 +507,7 @@ export default function AdminProductManager({
             >
               Hủy
             </button>
+          </div>
           </div>
         </div>
       )}
