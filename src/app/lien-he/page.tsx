@@ -27,7 +27,7 @@ export default function ContactPage() {
           </a>
         </p>
         <p>
-          📍 Địa chỉ: Số 28, đường Hồ 50, phường Chiềng Sinh, thành phố Sơn La
+          📍 Địa chỉ: Số 28, Ngõ Hồ 50, phường Chiềng Sinh, tỉnh Sơn La
         </p>
         <p>🕘 Giờ làm việc: 8h00 – 20h00 hàng ngày</p>
       </div>

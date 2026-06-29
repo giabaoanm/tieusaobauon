@@ -82,8 +82,8 @@ export default function RootLayout({
       "Chuyên động tiêu trúc, tiêu bát khổng, sáo trúc thủ công cao cấp, độc bản.",
     address: {
       "@type": "PostalAddress",
-      streetAddress: "Số 28, đường Hồ 50, phường Chiềng Sinh",
-      addressLocality: "Thành phố Sơn La",
+      streetAddress: "Số 28, Ngõ Hồ 50, phường Chiềng Sinh",
+      addressLocality: "Tỉnh Sơn La",
       addressRegion: "Sơn La",
       addressCountry: "VN",
     },

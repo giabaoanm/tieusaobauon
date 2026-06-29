@@ -72,7 +72,7 @@ export default function Footer() {
                   Zalo: 0993 666 625
                 </a>
               </li>
-              <li>📍 Số 28, đường Hồ 50, P. Chiềng Sinh, TP. Sơn La</li>
+              <li>📍 Số 28, Ngõ Hồ 50, P. Chiềng Sinh, tỉnh Sơn La</li>
             </ul>
           </div>
         </div>
