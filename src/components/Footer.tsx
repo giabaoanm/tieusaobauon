@@ -30,8 +30,8 @@ export default function Footer() {
               </span>
             </div>
             <p className="text-sm text-bamboo-700">
-              Chuyên động tiêu trúc và sáo trúc thủ công, độc bản — mỗi cây dồn
-              cả đam mê, thổi hồn vào từng cây trúc.
+              Chuyên động tiêu trúc và sáo trúc thủ công — mỗi cây tiêu, cây sáo
+              được làm ra với sự tinh xảo và niềm đam mê cháy bỏng.
             </p>
           </div>
 
