@@ -8,7 +8,7 @@ export default function ContactPage() {
         Cần tư vấn chọn sáo/tiêu hợp với bạn? Liên hệ với chúng tôi:
       </p>
       <div className="mt-6 space-y-3 rounded-2xl border border-bamboo-200 bg-white p-6 text-bamboo-800">
-        <p>👤 Người liên hệ: Bá Uôn</p>
+        <p>👤 Người liên hệ: Thành Đan</p>
         <p>
           📞 Gọi điện:{" "}
           <a href="tel:0993666625" className="font-medium hover:underline">

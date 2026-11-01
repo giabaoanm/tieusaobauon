@@ -18,11 +18,11 @@ const SITE_URL = "https://tieutrucviet.com.vn";
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Động tiêu Bá Uôn — Động tiêu, sáo trúc thủ công cao cấp",
-    template: "%s | Động tiêu Bá Uôn",
+    default: "Động tiêu Thành Đan — Động tiêu, sáo trúc thủ công cao cấp",
+    template: "%s | Động tiêu Thành Đan",
   },
   description:
-    "Động tiêu Bá Uôn — chuyên động tiêu trúc, tiêu bát khổng, sáo trúc thủ công cao cấp, độc bản. Mỗi cây kèm video thổi thử, chuẩn tone, kích thước Lỗ Ban. Giao toàn quốc.",
+    "Động tiêu Thành Đan — chuyên động tiêu trúc, tiêu bát khổng, sáo trúc thủ công cao cấp, độc bản. Mỗi cây kèm video thổi thử, chuẩn tone, kích thước Lỗ Ban. Giao toàn quốc.",
   keywords: [
     "động tiêu",
     "động tiêu trúc",
@@ -32,6 +32,7 @@ export const metadata: Metadata = {
     "sáo trúc",
     "sáo trúc cao cấp",
     "nhạc cụ truyền thống",
+    "động tiêu Thành Đan",
     "động tiêu Bá Uôn",
     "động tiêu Sơn La",
   ],
@@ -40,11 +41,11 @@ export const metadata: Metadata = {
     google: "8G8ynWA6T63TUyxAdglbWoocC9i6TiRoi3PdlWbY6uc",
   },
   openGraph: {
-    title: "Động tiêu Bá Uôn — Động tiêu, sáo trúc thủ công cao cấp",
+    title: "Động tiêu Thành Đan — Động tiêu, sáo trúc thủ công cao cấp",
     description:
       "Động tiêu trúc, tiêu bát khổng, sáo trúc thủ công, độc bản. Nghe thử trực tiếp qua video từng cây.",
     url: SITE_URL,
-    siteName: "Động tiêu Bá Uôn",
+    siteName: "Động tiêu Thành Đan",
     type: "website",
     locale: "vi_VN",
     images: [
@@ -52,13 +53,13 @@ export const metadata: Metadata = {
         url: "/banner/hero-dao-xuan.jpg",
         width: 2600,
         height: 867,
-        alt: "Động tiêu Bá Uôn — động tiêu, sáo trúc thủ công",
+        alt: "Động tiêu Thành Đan — động tiêu, sáo trúc thủ công",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Động tiêu Bá Uôn — Động tiêu, sáo trúc thủ công cao cấp",
+    title: "Động tiêu Thành Đan — Động tiêu, sáo trúc thủ công cao cấp",
     description:
       "Động tiêu trúc, tiêu bát khổng, sáo trúc thủ công, độc bản.",
     images: ["/banner/hero-dao-xuan.jpg"],
@@ -73,7 +74,7 @@ export default function RootLayout({
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Store",
-    name: "Động tiêu Bá Uôn",
+    name: "Động tiêu Thành Đan",
     image: `${SITE_URL}/banner/hero-dao-xuan.jpg`,
     logo: `${SITE_URL}/logo-512.png`,
     url: SITE_URL,

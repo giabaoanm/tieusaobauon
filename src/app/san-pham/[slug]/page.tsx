@@ -51,7 +51,7 @@ export default async function ProductDetailPage({
     image: [product.imageMain, product.imageDetail].filter(Boolean),
     description: product.description,
     category: PRODUCT_TYPE_LABELS[product.type],
-    brand: { "@type": "Brand", name: "Động tiêu Bá Uôn" },
+    brand: { "@type": "Brand", name: "Động tiêu Thành Đan" },
     offers: {
       "@type": "Offer",
       price: product.price,

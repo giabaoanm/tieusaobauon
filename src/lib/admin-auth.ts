@@ -127,7 +127,7 @@ export function newTotpSecret(): { secret: string; otpauth: string } {
   const secret = authenticator.generateSecret();
   const otpauth = authenticator.keyuri(
     "admin",
-    "Dong tieu Ba Uon",
+    "Dong tieu Thanh Dan",
     secret,
   );
   return { secret, otpauth };

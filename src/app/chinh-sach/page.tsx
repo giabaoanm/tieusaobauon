@@ -1,7 +1,7 @@
 export const metadata = {
   title: "Chính sách",
   description:
-    "Chính sách bảo hành, đổi trả, vận chuyển và thanh toán của Động tiêu Bá Uôn.",
+    "Chính sách bảo hành, đổi trả, vận chuyển và thanh toán của Động tiêu Thành Đan.",
 };
 
 const sections = [
@@ -50,7 +50,7 @@ export default function PolicyPage() {
         Chính sách mua hàng
       </h1>
       <p className="mt-3 text-bamboo-700">
-        Động tiêu Bá Uôn cam kết minh bạch và đặt sự hài lòng của bạn lên hàng
+        Động tiêu Thành Đan cam kết minh bạch và đặt sự hài lòng của bạn lên hàng
         đầu.
       </p>
 

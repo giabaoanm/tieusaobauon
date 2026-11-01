@@ -1,5 +1,5 @@
 -- ──────────────────────────────────────────────────────────────
--- Động tiêu Bá Uôn — Lược đồ database Supabase (chạy trong SQL Editor)
+-- Động tiêu Thành Đan — Lược đồ database Supabase (chạy trong SQL Editor)
 -- ──────────────────────────────────────────────────────────────
 
 -- Bảng sản phẩm

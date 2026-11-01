@@ -7,7 +7,7 @@ import { formatPrice } from "@/lib/types";
 // Gửi email xác nhận đơn hàng qua Resend (resend.com).
 // Cấu hình .env.local:
 //   RESEND_API_KEY=re_xxx          (lấy ở resend.com → API Keys)
-//   EMAIL_FROM="Động tiêu Bá Uôn <donhang@tieutrucviet.com.vn>"
+//   EMAIL_FROM="Động tiêu Thành Đan <donhang@tieutrucviet.com.vn>"
 //   NEXT_PUBLIC_SITE_URL=https://tieutrucviet.com.vn
 // Chưa cấu hình → bỏ qua gửi mail (đơn vẫn đặt bình thường).
 // ──────────────────────────────────────────────────────────────
@@ -49,7 +49,7 @@ function buildHtml(order: Order): string {
   return `
   <div style="font-family:Arial,Helvetica,sans-serif;max-width:560px;margin:0 auto;color:#45351c;">
     <div style="background:#a07522;color:#fff;padding:20px 24px;border-radius:12px 12px 0 0;">
-      <h1 style="margin:0;font-size:20px;">🎋 Động tiêu Bá Uôn</h1>
+      <h1 style="margin:0;font-size:20px;">🎋 Động tiêu Thành Đan</h1>
     </div>
     <div style="border:1px solid #eee;border-top:none;border-radius:0 0 12px 12px;padding:24px;">
       <h2 style="margin:0 0 6px;">Cảm ơn bạn đã đặt hàng! 🎉</h2>
@@ -92,11 +92,11 @@ export async function sendOrderConfirmation(order: Order): Promise<boolean> {
     const resend = new Resend(process.env.RESEND_API_KEY);
     const from =
       process.env.EMAIL_FROM ||
-      "Động tiêu Bá Uôn <onboarding@resend.dev>";
+      "Động tiêu Thành Đan <onboarding@resend.dev>";
     await resend.emails.send({
       from,
       to: order.email,
-      subject: `Xác nhận đơn hàng ${order.orderCode} — Động tiêu Bá Uôn`,
+      subject: `Xác nhận đơn hàng ${order.orderCode} — Động tiêu Thành Đan`,
       html: buildHtml(order),
     });
     return true;

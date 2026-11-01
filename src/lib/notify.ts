@@ -91,7 +91,7 @@ async function sendOwnerEmail(order: Order): Promise<boolean> {
   try {
     const resend = new Resend(process.env.RESEND_API_KEY);
     const from =
-      process.env.EMAIL_FROM || "Động tiêu Bá Uôn <onboarding@resend.dev>";
+      process.env.EMAIL_FROM || "Động tiêu Thành Đan <onboarding@resend.dev>";
     await resend.emails.send({
       from,
       to,

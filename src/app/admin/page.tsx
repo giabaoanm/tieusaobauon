@@ -57,7 +57,7 @@ export default async function AdminPage() {
           <h1 className="font-serif text-3xl font-bold text-bamboo-800">
             Quản trị đơn hàng
           </h1>
-          <p className="mt-1 text-bamboo-600">Động tiêu Bá Uôn — khu vực Admin</p>
+          <p className="mt-1 text-bamboo-600">Động tiêu Thành Đan — khu vực Admin</p>
         </div>
         <div className="flex items-center gap-3">
           <Link

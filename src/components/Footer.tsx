@@ -20,13 +20,13 @@ export default function Footer() {
             <div className="mb-3 flex items-center gap-2.5">
               <Image
                 src="/logo.png"
-                alt="Logo Động tiêu Bá Uôn"
+                alt="Logo Động tiêu Thành Đan"
                 width={44}
                 height={44}
                 className="h-11 w-11 rounded-full object-cover ring-1 ring-bamboo-300"
               />
               <span className="font-serif text-lg font-bold text-bamboo-800">
-                Động tiêu Bá Uôn
+                Động tiêu Thành Đan
               </span>
             </div>
             <p className="text-sm text-bamboo-700">
@@ -54,7 +54,7 @@ export default function Footer() {
           <div>
             <h4 className="mb-3 font-semibold text-bamboo-800">Liên hệ</h4>
             <ul className="space-y-2 text-sm text-bamboo-700">
-              <li>👤 Bá Uôn</li>
+              <li>👤 Thành Đan</li>
               <li>
                 📞{" "}
                 <a href="tel:0993666625" className="hover:underline">
@@ -78,7 +78,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-8 border-t border-bamboo-200 pt-6 text-center text-xs text-bamboo-600">
-          © {new Date().getFullYear()} Động tiêu Bá Uôn. Mọi quyền được bảo lưu.
+          © {new Date().getFullYear()} Động tiêu Thành Đan. Mọi quyền được bảo lưu.
         </div>
       </div>
     </footer>

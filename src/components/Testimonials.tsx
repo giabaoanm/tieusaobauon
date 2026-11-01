@@ -8,7 +8,7 @@ export default function Testimonials() {
     <section className="bg-bamboo-50 py-14">
       <div className="mx-auto max-w-6xl px-4">
         <h2 className="mb-8 text-center font-serif text-2xl font-bold text-bamboo-800">
-          Khách hàng nói gì về Bá Uôn
+          Khách hàng nói gì về Thành Đan
         </h2>
         <div className="grid gap-5 md:grid-cols-3">
           {reviews.map((r, i) => (

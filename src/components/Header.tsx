@@ -28,23 +28,23 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-40 border-b border-bamboo-200 bg-bamboo-50/90 backdrop-blur">
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-2 px-4 py-4">
-        <Link href="/" className="flex shrink-0 items-center gap-2" onClick={() => setMenuOpen(false)}>
+      <div className="mx-auto flex max-w-6xl items-center justify-between gap-1 px-3 py-3 sm:gap-2 sm:px-4 sm:py-4">
+        <Link href="/" className="flex shrink-0 items-center gap-1.5 sm:gap-2" onClick={() => setMenuOpen(false)}>
           <Image
             src="/logo.png"
-            alt="Logo Động tiêu Bá Uôn"
+            alt="Logo Động tiêu Thành Đan"
             width={44}
             height={44}
             priority
-            className="h-11 w-11 rounded-full object-cover ring-1 ring-bamboo-300"
+            className="h-9 w-9 rounded-full object-cover ring-1 ring-bamboo-300 sm:h-11 sm:w-11"
           />
-          <span className="whitespace-nowrap font-serif text-base font-bold text-bamboo-800 sm:text-xl">
-            Động tiêu Bá Uôn
+          <span className="whitespace-nowrap font-serif text-sm font-bold text-bamboo-800 min-[360px]:text-[15px] sm:text-xl md:text-lg lg:text-xl">
+            Động tiêu Thành Đan
           </span>
         </Link>
 
         {/* Menu ngang (máy tính) */}
-        <nav className="hidden items-center gap-4 whitespace-nowrap text-sm font-medium md:flex lg:gap-6">
+        <nav className="hidden items-center gap-3 whitespace-nowrap text-sm font-medium md:flex lg:gap-6">
           {NAV_LINKS.map((l) => (
             <Link key={l.href} href={l.href} className="hover:text-bamboo-600">
               {l.label}
@@ -52,12 +52,12 @@ export default function Header() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1 sm:gap-2">
           {phone && (
             <a
               href={`tel:${phone}`}
               aria-label={`Gọi ${phoneDisplay}`}
-              className="flex items-center gap-1.5 rounded-full border border-bamboo-300 bg-white px-2.5 py-2 text-sm font-semibold text-bamboo-700 transition hover:bg-bamboo-50 sm:px-3"
+              className="flex items-center gap-1.5 rounded-full border border-bamboo-300 bg-white px-2 py-2 text-sm font-semibold text-bamboo-700 transition hover:bg-bamboo-50 sm:px-3"
             >
               <span aria-hidden>📞</span>
               <span className="hidden lg:inline">{phoneDisplay}</span>
@@ -65,7 +65,7 @@ export default function Header() {
           )}
           <Link
             href="/gio-hang"
-            className="relative flex items-center gap-2 whitespace-nowrap rounded-full bg-bamboo-600 px-3 py-2 text-sm font-medium text-white transition hover:bg-bamboo-700 lg:px-4"
+            className="relative flex items-center gap-2 whitespace-nowrap rounded-full bg-bamboo-600 px-2 py-2 text-sm font-medium text-white transition hover:bg-bamboo-700 sm:px-3 lg:px-4"
             onClick={() => setMenuOpen(false)}
           >
             🛒 <span className="hidden lg:inline">Giỏ hàng</span>
@@ -82,7 +82,7 @@ export default function Header() {
             onClick={() => setMenuOpen((o) => !o)}
             aria-label={menuOpen ? "Đóng menu" : "Mở menu"}
             aria-expanded={menuOpen}
-            className="flex h-10 w-10 items-center justify-center rounded-full text-2xl text-bamboo-800 transition hover:bg-bamboo-100 md:hidden"
+            className="flex h-10 w-8 items-center justify-center rounded-full text-2xl text-bamboo-800 transition hover:bg-bamboo-100 sm:w-10 md:hidden"
           >
             {menuOpen ? "✕" : "☰"}
           </button>

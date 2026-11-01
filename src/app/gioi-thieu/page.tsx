@@ -4,8 +4,11 @@ export default function AboutPage() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-16">
       <h1 className="font-serif text-3xl font-bold text-bamboo-800">
-        Câu chuyện Động tiêu Bá Uôn
+        Câu chuyện Động tiêu Thành Đan
       </h1>
+      <p className="mt-2 text-sm text-bamboo-500">
+        Trước đây là Động tiêu Bá Uôn.
+      </p>
 
       <div className="mt-6 space-y-4 leading-relaxed text-bamboo-700">
         <p>
