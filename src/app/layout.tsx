@@ -49,9 +49,9 @@ export const metadata: Metadata = {
     locale: "vi_VN",
     images: [
       {
-        url: "/banner/hero-tien-ong.jpg",
-        width: 1360,
-        height: 768,
+        url: "/banner/hero-dao-xuan.jpg",
+        width: 2600,
+        height: 867,
         alt: "Động tiêu Bá Uôn — động tiêu, sáo trúc thủ công",
       },
     ],
@@ -61,7 +61,7 @@ export const metadata: Metadata = {
     title: "Động tiêu Bá Uôn — Động tiêu, sáo trúc thủ công cao cấp",
     description:
       "Động tiêu trúc, tiêu bát khổng, sáo trúc thủ công, độc bản.",
-    images: ["/banner/hero-tien-ong.jpg"],
+    images: ["/banner/hero-dao-xuan.jpg"],
   },
 };
 
@@ -74,7 +74,7 @@ export default function RootLayout({
     "@context": "https://schema.org",
     "@type": "Store",
     name: "Động tiêu Bá Uôn",
-    image: `${SITE_URL}/banner/hero-tien-ong.jpg`,
+    image: `${SITE_URL}/banner/hero-dao-xuan.jpg`,
     logo: `${SITE_URL}/logo-512.png`,
     url: SITE_URL,
     telephone: "+84993666625",
