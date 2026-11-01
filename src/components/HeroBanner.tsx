@@ -128,19 +128,19 @@ export default function HeroBanner() {
 
         {/* Nội dung overlay (chỉ các nút mới nhận chuột) */}
         <div className="pointer-events-none absolute inset-0 z-10">
-          <div className="mx-auto flex h-full max-w-6xl flex-col justify-end px-4 pb-7 sm:pb-10 md:pb-14">
+          <div className="mx-auto flex h-full max-w-6xl flex-col justify-end px-4 pb-7 sm:pb-6 lg:pb-10 xl:pb-14">
             <div className="w-full max-w-xl">
               <p className="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-amber-200 drop-shadow sm:text-sm">
                 Nhạc cụ dân tộc thủ công
               </p>
-              <h1 className="font-serif text-3xl font-bold leading-tight text-white drop-shadow-lg sm:text-5xl md:text-6xl">
+              <h1 className="font-serif text-3xl font-bold leading-tight text-white drop-shadow-lg sm:text-4xl md:text-5xl xl:text-6xl">
                 Thổi hồn vào trúc
               </h1>
-              <p className="mt-2 max-w-md text-sm text-white/90 drop-shadow sm:mt-3 sm:text-lg">
+              <p className="mt-2 max-w-md text-sm text-white/90 drop-shadow sm:text-base lg:mt-3 xl:text-lg">
                 Động tiêu &amp; sáo trúc làm thủ công — mang theo hương rừng, gió
                 núi, thanh âm bốn mùa của người Việt.
               </p>
-              <div className="mt-4 flex flex-wrap gap-3 sm:mt-7 sm:gap-4">
+              <div className="mt-4 flex flex-wrap gap-3 lg:mt-5 xl:mt-7 xl:gap-4">
                 <Link
                   href="/san-pham"
                   className="pointer-events-auto rounded-full bg-white px-5 py-2.5 text-sm font-medium text-bamboo-900 shadow-lg transition hover:bg-bamboo-50 sm:px-6 sm:py-3 sm:text-base"

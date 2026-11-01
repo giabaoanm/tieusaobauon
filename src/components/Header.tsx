@@ -28,8 +28,8 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-40 border-b border-bamboo-200 bg-bamboo-50/90 backdrop-blur">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4">
-        <Link href="/" className="flex items-center gap-2.5" onClick={() => setMenuOpen(false)}>
+      <div className="mx-auto flex max-w-6xl items-center justify-between gap-2 px-4 py-4">
+        <Link href="/" className="flex shrink-0 items-center gap-2" onClick={() => setMenuOpen(false)}>
           <Image
             src="/logo.png"
             alt="Logo Động tiêu Bá Uôn"
@@ -38,13 +38,13 @@ export default function Header() {
             priority
             className="h-11 w-11 rounded-full object-cover ring-1 ring-bamboo-300"
           />
-          <span className="font-serif text-lg font-bold text-bamboo-800 sm:text-xl">
+          <span className="whitespace-nowrap font-serif text-base font-bold text-bamboo-800 sm:text-xl">
             Động tiêu Bá Uôn
           </span>
         </Link>
 
         {/* Menu ngang (máy tính) */}
-        <nav className="hidden items-center gap-6 text-sm font-medium md:flex">
+        <nav className="hidden items-center gap-4 whitespace-nowrap text-sm font-medium md:flex lg:gap-6">
           {NAV_LINKS.map((l) => (
             <Link key={l.href} href={l.href} className="hover:text-bamboo-600">
               {l.label}
@@ -65,10 +65,10 @@ export default function Header() {
           )}
           <Link
             href="/gio-hang"
-            className="relative flex items-center gap-2 rounded-full bg-bamboo-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-bamboo-700"
+            className="relative flex items-center gap-2 whitespace-nowrap rounded-full bg-bamboo-600 px-3 py-2 text-sm font-medium text-white transition hover:bg-bamboo-700 lg:px-4"
             onClick={() => setMenuOpen(false)}
           >
-            🛒 <span className="hidden sm:inline">Giỏ hàng</span>
+            🛒 <span className="hidden lg:inline">Giỏ hàng</span>
             {count > 0 && (
               <span className="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-clay-600 px-1 text-xs font-bold text-white">
                 {count}
